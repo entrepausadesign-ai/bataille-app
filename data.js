@@ -8,6 +8,33 @@ const DOC = {
     eyebrow: "preparação · mestrado design prospectivo · UTFPR",
     program: "Design Prospectivo — UTFPR · orientação Fred Van Amstel",
     candidate: "Designer · ESDI/UERJ 2017 · Rio de Janeiro",
+  orthodoxCore: {
+    label: "Definição ortodoxa — núcleo duro da tese",
+    title: "Dépense, em Bataille, é a lei do excesso e não uma metáfora moral do desperdício",
+    intro: `Antes de qualquer correlação com design, complexidade, cuidado, crítica social ou sustentabilidade, Bataille formula uma tese de economia geral: a vida não se organiza a partir da falta, mas da superabundância de energia. O problema central de uma sociedade não é apenas produzir e conservar, mas decidir como dissipar o excedente inevitável que se acumula em todo sistema vivo.`,
+    pillars: [
+      {
+        name: "Princípio de base",
+        body: "A fonte originária não é a escassez, mas o excesso. O sol irradia sem contrapartida; a vida emerge dessa prodigalidade primeira."
+      },
+      {
+        name: "Lei do gasto",
+        body: "Toda energia excedente deve ser consumida, queimada, desperdiçada, sacrificada ou descarregada. Se não encontra vias escolhidas de dissipação, retorna de forma violenta ou catastrófica."
+      },
+      {
+        name: "Dépense",
+        body: "Dépense é o nome do gasto improdutivo: aquilo que não se justifica por utilidade, reprodução ampliada, investimento ou retorno. Festa, luxo, erotismo, arte, sacrifício, glória e perda pertencem a esse regime."
+      },
+      {
+        name: "Crítica à economia restrita",
+        body: "A economia clássica observa apenas produção, troca e conservação. Bataille diz que isso é insuficiente porque ignora precisamente o destino inevitável do excedente."
+      },
+      {
+        name: "Ponto decisivo",
+        body: "A questão não é eliminar a perda, mas reconhecer que a perda é estrutural. Toda ordem social precisa organizar seus modos de gasto."
+      }
+    ],
+    closing: `Neste bloco, a tese deve ser lida em seu estado mais duro: não como defesa romântica do irracional, nem como elogio simples da desordem, mas como afirmação de que a perda é constitutiva da vida e que toda política, moral ou economia que negue isso prepara formas mais destrutivas de descarga.`
   },
 
   synthesis: {

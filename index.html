@@ -114,6 +114,24 @@ function b0(d) {
   return full(card('gold', lbl(d.label) + h2(d.title) + p(d.body) + `<div style="margin-top:12px">${tags}</div>`));
 }
 
+/* b0a — definição ortodoxa */
+function b0a(d) {
+  const pillars = d.pillars.map(item =>
+    `<div class="orthodox-pillar">
+      <h3>${item.name}</h3>
+      ${p(item.body)}
+    </div>`
+  ).join('');
+
+  return full(card('orthodox',
+    lbl(d.label) +
+    h2(d.title) +
+    `<p class="orthodox-intro">${d.intro}</p>` +
+    `<div class="orthodox-pillars">${pillars}</div>` +
+    `<p class="orthodox-closing">${d.closing}</p>`
+  ));
+}
+
 /* b1 — equívoco fundador + ficção da escassez */
 function b1(cp, sm) {
   return `<div class="grid-2">
@@ -280,6 +298,7 @@ function renderAll() {
   renderLegend();
 
   document.getElementById('blocks').innerHTML = [
+    b0a(DOC.orthodoxCore),
     b0(DOC.synthesis),
     b1(DOC.coreProblem, DOC.scarcityMyth),
     b2(DOC.invisibleEconomy),

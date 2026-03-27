@@ -492,3 +492,53 @@ footer p {
   border-radius: 4px;
 }
 .cluster-wrap { margin-bottom: 20px; }
+
+
+/* ── ORTHODOX CORE BLOCK ── */
+.card.orthodox {
+  background: linear-gradient(180deg, #f7f2e8 0%, #fdfbf6 100%);
+  border-color: #b9ab8a;
+  box-shadow: inset 0 0 0 1px rgba(185,171,138,.18);
+}
+
+.orthodox-intro {
+  font-size: 1.08rem;
+  color: var(--ink);
+  margin-top: 10px;
+}
+
+.orthodox-pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.orthodox-pillar {
+  background: rgba(255,255,255,.58);
+  border: 1px solid #d8cfbd;
+  border-radius: 6px;
+  padding: 14px 15px;
+}
+
+.orthodox-pillar h3 {
+  font-size: .95rem;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: var(--gold);
+}
+
+.orthodox-closing {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #d8cfbd;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+@media (max-width: 720px) {
+  .orthodox-pillars {
+    grid-template-columns: 1fr;
+  }
+}
