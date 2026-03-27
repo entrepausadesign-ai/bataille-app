@@ -288,28 +288,6 @@ DOC.latourSynthesis = {
   closing: "O que Latour nos permite ver é que este documento não é uma coletânea de autores — é uma rede de actantes tentando estabilizar um argumento: que a vida que sustenta o sistema é exatamente o que o sistema nega computar. Cada autor é uma tradução diferente desse mesmo actante central. A dissertação que emerge disso não precisa citar todos — precisa mostrar a rede."
 };
 
-/* ══════════════════════════════════════════
-   V1.3 — BADGE SYSTEM
-   ══════════════════════════════════════════ */
-
-/* ── Taxonomia de olhares ── */
-  campo:         { bg:'#e6f1fb', fg:'#0c447c', br:'#85b7eb', label:'campo'     },
-  tradicao:      { bg:'#eeedfe', fg:'#3c3489', br:'#afa9ec', label:'tradição'  },
-  metodo:        { bg:'#e1f5ee', fg:'#085041', br:'#5dcaa5', label:'método'    },
-  epistemologia: { bg:'#faece7', fg:'#712b13', br:'#f0997b', label:'episteme'  },
-  escala:        { bg:'#faeeda', fg:'#633806', br:'#ef9f27', label:'escala'    },
-};
-
-/* ── helper global ── */
-  if (!badges || !badges.length) return '';
-  return '<div class="badge-row">' +
-    badges.map(b => {
-      const t = BADGE_TYPES[b.type] || BADGE_TYPES.campo;
-      return `<span class="badge-pill" style="background:${t.bg};color:${t.fg};border-color:${t.br}" title="${t.label}">${b.text}</span>`;
-    }).join('') +
-  '</div>';
-}
-
 /* ── Badges nos thinkers originais ── */
 DOC.thinkers[0].badges = [
   { type:'campo',         text:'teoria cultural' },   // EXPANSÃO: cultural studies
