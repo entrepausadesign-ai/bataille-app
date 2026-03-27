@@ -179,8 +179,6 @@ const DOC = {
 };
 
 /* ── V1.2 ADDITIONS ── */
-DOC.meta.version = "v1.2";
-
 DOC.thinkersExpanded = [
   {
     id: "han",
@@ -295,7 +293,6 @@ DOC.latourSynthesis = {
    ══════════════════════════════════════════ */
 
 /* ── Taxonomia de olhares ── */
-const BADGE_TYPES = {
   campo:         { bg:'#e6f1fb', fg:'#0c447c', br:'#85b7eb', label:'campo'     },
   tradicao:      { bg:'#eeedfe', fg:'#3c3489', br:'#afa9ec', label:'tradição'  },
   metodo:        { bg:'#e1f5ee', fg:'#085041', br:'#5dcaa5', label:'método'    },
@@ -304,7 +301,6 @@ const BADGE_TYPES = {
 };
 
 /* ── helper global ── */
-function renderBadges(badges) {
   if (!badges || !badges.length) return '';
   return '<div class="badge-row">' +
     badges.map(b => {
@@ -445,4 +441,255 @@ DOC.latourSynthesis.badges = [
   { type:'escala',        text:'trans-escalar'     },
 ];
 
-DOC.meta.version = "v1.3";
+/* ══════════════════════════════════════════
+   V1.4 — SOMAESTHETICS + TENSION/REDUCTION BLOCK
+   ══════════════════════════════════════════ */
+
+/* ── Expansões de taxonomia v1.4 ── */
+// campo: somaestética, neurociências, cibernética, fenomenologia do corpo
+// tradicao: esquizoanálise, psicanálise
+// epistemologia: vitalista
+// metodo: cartográfico
+
+/* ── 1. Atualiza complexity com somaesthetics ── */
+DOC.complexity.body2 = "A Somaestética (Shusterman) completa o triângulo: se a complexidade é o paradigma sistêmico e a ecologia da mente é o paradigma relacional, a somaestética é o paradigma encorporado — o corpo como locus onde a complexidade do mundo se precipita em experiência vivida, antes de qualquer abstração. Soma Design de Höök é somaestética aplicada ao processo projetual.";
+DOC.complexity.badges.push({ type:'campo', text:'somaestética' });
+
+/* ── 2. Novo bloco: tensão entre redução útil e saturação ── */
+DOC.tensionReduction = {
+  label: "tensão produtiva — redução útil vs. saturação da complexidade",
+  title: "Como não se perder no ruído sem trair a complexidade",
+  badges: [
+    { type:'campo',         text:'cibernética'           },
+    { type:'campo',         text:'fenomenologia do corpo' },
+    { type:'campo',         text:'neurociências'          },
+    { type:'tradicao',      text:'esquizoanálise'         },
+    { type:'tradicao',      text:'psicanálise'            },
+    { type:'epistemologia', text:'vitalista'              },
+    { type:'metodo',        text:'cartográfico'           },
+    { type:'escala',        text:'molecular'              },
+    { type:'escala',        text:'trans-escalar'          },
+  ],
+  intro: "O problema não é a complexidade — é a paralisia diante dela. Cada campo abaixo desenvolveu uma estratégia de redução que não trai o todo: uma forma de comprimir sem apagar o essencial.",
+  nodes: [
+    {
+      cluster: "autopoiese e autorregulação",
+      color: "teal",
+      items: [
+        {
+          name: "Autopoiese (Maturana / Varela)",
+          body: "Sistemas vivos se definem pela capacidade de se produzir a si mesmos — não pelo que fazem com o ambiente, mas pelo que mantêm de si. A redução útil é homeostática: o sistema descarta o que não serve à sua auto-organização. Para a dissertação: o que a pesquisa precisa manter de si mesma para continuar sendo ela mesma à medida que cresce?",
+          badges: [{ type:'campo', text:'biologia' }, { type:'metodo', text:'sistêmico' }, { type:'epistemologia', text:'construtivista' }]
+        },
+        {
+          name: "Homeostase + cibernética (Wiener / Bateson)",
+          body: "A cibernética de segunda ordem — Bateson, Von Foerster — resolve o problema da redução introduzindo o observador no sistema: você não reduz o mundo, você reduz a sua relação com ele. O feedback não é controle — é aprendizado. A diferença que faz diferença (Bateson) é a unidade mínima de informação que vale guardar.",
+          badges: [{ type:'campo', text:'cibernética' }, { type:'metodo', text:'sistêmico' }, { type:'escala', text:'trans-escalar' }]
+        },
+      ]
+    },
+    {
+      cluster: "corpo como princípio de redução",
+      color: "coral",
+      items: [
+        {
+          name: "Merleau-Ponty — a carne como chão",
+          body: "O corpo vivido (Leib) não é objeto no espaço — é o ponto zero a partir do qual qualquer espaço é vivido. A carne é o tecido comum entre sujeito e mundo. Para a saturação conceitual: voltar ao corpo é o gesto de redução mais radical disponível — não porque simplifique, mas porque ancora. O que isso significa para o corpo na sua pesquisa?",
+          badges: [{ type:'campo', text:'fenomenologia do corpo' }, { type:'tradicao', text:'fenomenologia' }, { type:'escala', text:'micro' }]
+        },
+        {
+          name: "Wilhelm Reich — armadura e fluxo",
+          body: "Reich identificou que a repressão psíquica se deposita no corpo como tensão muscular crônica — a 'armadura'. O que Bataille chama de dépense bloqueada, Reich chama de energia represada. A redução útil aqui é clínica: não suprimir o afeto, mas criar condições para que ele flua sem destruir. Biodanza (Toro) é a versão grupal e celebratória dessa mesma intuição.",
+          badges: [{ type:'campo', text:'psicanálise' }, { type:'epistemologia', text:'vitalista' }, { type:'metodo', text:'clínico' }, { type:'escala', text:'micro' }]
+        },
+        {
+          name: "Rolando Toro — biodanza e o princípio biocêntrico",
+          body: "Toro propõe a vida como valor central — não a cultura, não a razão, não o sujeito. Biodanza é um sistema de desenvolvimento humano que usa música, movimento e encontro para ativar potenciais de vida. É a dépense na forma de célula: o gasto de energia em danças que não produzem nada além do fortalecimento do vínculo vital. A redução que Toro opera é radical: o que não serve à vida, sai.",
+          badges: [{ type:'campo', text:'fenomenologia do corpo' }, { type:'epistemologia', text:'vitalista' }, { type:'metodo', text:'somático' }]
+        },
+      ]
+    },
+    {
+      cluster: "cartografia, rizoma e anti-redução",
+      color: "purple",
+      items: [
+        {
+          name: "Deleuze + Guattari — rizoma e plano de imanência",
+          body: "O rizoma é a recusa da árvore: nenhum centro, nenhuma raiz, nenhuma hierarquia. Mas Deleuze/Guattari não propõem o caos — propõem o plano de imanência como superfície onde as conexões se trançam sem se subordinar. A redução cartográfica não simplifica: mapeia as intensidades, os platôs, as linhas de fuga. Para a dissertação: o mapa não é o território — mas sem mapa você não viaja.",
+          badges: [{ type:'tradicao', text:'esquizoanálise' }, { type:'metodo', text:'cartográfico' }, { type:'escala', text:'molecular' }]
+        },
+        {
+          name: "Esquizoanálise — desejo como produção",
+          body: "Para Deleuze/Guattari, o desejo não é falta (Freud/Lacan) — é produção. O inconsciente não representa, ele fabrica. Isso inverte a lógica da redução psicanalítica: em vez de interpretar (reduzir ao sentido), cartografar (seguir as conexões). Para a pesquisa: o que está sendo produzido nesta dissertação, não o que ela representa?",
+          badges: [{ type:'tradicao', text:'esquizoanálise' }, { type:'epistemologia', text:'materialista' }, { type:'escala', text:'molecular' }]
+        },
+      ]
+    },
+    {
+      cluster: "sentido, sonho e esperança",
+      color: "gold",
+      items: [
+        {
+          name: "Ernst Bloch — o ainda-não e a esperança douta",
+          body: "O Princípio Esperança (1954) é a mais rigorosa filosofia da antecipação: a esperança não é ilusão — é a orientação cognitiva ao possível ainda não realizado. O sonho diurno (Tagtraum) é epistemologicamente superior ao sonho noturno porque é ativo: imagina futuros e age sobre eles. A redução de Bloch é teleológica: o que desta complexidade aponta para o que ainda não existe?",
+          badges: [{ type:'campo', text:'filosofia' }, { type:'tradicao', text:'teoria crítica' }, { type:'epistemologia', text:'crítico-normativo' }, { type:'escala', text:'macro' }]
+        },
+        {
+          name: "Viktor Frankl — logoterapia e o sentido como âncora",
+          body: "Frankl, a partir de Auschwitz: quem tem um porquê suporta qualquer como. O sentido não se cria — se encontra, no sofrimento, no amor, na obra. Para a pesquisa saturada: não se trata de reduzir a complexidade, mas de encontrar o fio de sentido que organiza o campo sem achatar suas tensões. O sentido é o princípio de redução mais humano disponível.",
+          badges: [{ type:'campo', text:'filosofia' }, { type:'campo', text:'psicanálise' }, { type:'metodo', text:'clínico' }, { type:'escala', text:'micro' }]
+        },
+      ]
+    },
+    {
+      cluster: "psicanálise — o inconsciente como complexidade irredutível",
+      color: "purple",
+      items: [
+        {
+          name: "Freud / Lacan — o sujeito dividido",
+          body: "Freud descobre que o ego não é senhor em sua própria casa. Lacan radicaliza: o sujeito é efeito da linguagem, constituído pela falta. A psicanálise opera uma redução muito específica: não simplifica o sujeito, mas o divide — ego/id/superego, simbólico/imaginário/real. Útil para a dissertação como dispositivo de escuta das resistências internas ao próprio processo de pesquisa.",
+          badges: [{ type:'tradicao', text:'psicanálise' }, { type:'metodo', text:'clínico' }, { type:'escala', text:'micro' }]
+        },
+        {
+          name: "Winnicott — o espaço potencial e o brincar",
+          body: "Winnicott localiza a criatividade no 'espaço potencial' entre o eu e o não-eu — o mesmo espaço do brincar e da cultura. Nem sujeito puro, nem objeto puro: a experiência cultural vive nessa membrana. A dissertação-dispositivo de que você fala é um espaço potencial winnicottiano: não é seu, não é do leitor — nasce entre os dois.",
+          badges: [{ type:'tradicao', text:'psicanálise' }, { type:'metodo', text:'clínico' }, { type:'epistemologia', text:'construtivista' }, { type:'escala', text:'micro' }]
+        },
+      ]
+    },
+    {
+      cluster: "mundos emergentes — antropoceno, chthuluceno, humusidades",
+      color: "teal",
+      items: [
+        {
+          name: "Antropoceno / Chthuluceno (Haraway)",
+          body: "Haraway recusa 'Antropoceno' — o nome que coloca o humano no centro da catástrofe que ele causou. Propõe 'Chthuluceno': o tempo das conexões tentaculares com outras espécies, outras temporalidades. A redução útil aqui é ecológica: o que desta pesquisa se conecta com o que não é humano? O design prospectivo que não pergunta isso é design do Antropoceno.",
+          badges: [{ type:'campo', text:'biologia' }, { type:'campo', text:'STS' }, { type:'tradicao', text:'feminismo' }, { type:'escala', text:'macro' }]
+        },
+        {
+          name: "Humusidades (Zoy Anastassakis + Isis Dias — ESDI/UERJ/Rio)",
+          body: "Conceito desenvolvido no campo do design brasileiro — especialmente na ESDI/UERJ — que propõe o húmus como metáfora epistemológica: conhecimento que se forma por decomposição, fermentação, mistura de corpos e temporalidades heterogêneas. Humano + humus: somos feitos da mesma matéria que o solo. Está diretamente na sua trajetória — ESDI é sua casa de origem. O chorume como adubo que você descreveu é humusidade pura.",
+          badges: [{ type:'campo', text:'design' }, { type:'tradicao', text:'decolonial' }, { type:'epistemologia', text:'materialista' }, { type:'epistemologia', text:'encorporado' }, { type:'escala', text:'molecular' }]
+        },
+      ]
+    },
+    {
+      cluster: "neurociências e IA — a redução maquínica",
+      color: "gray",
+      items: [
+        {
+          name: "Neurociências — plasticidade e o cérebro como ecologia",
+          body: "A neurociência contemporânea (Damasio, Varela, Thompson) converge com a fenomenologia: não há cognição sem corpo, não há emoção sem razão. A plasticidade neural é autopoiese em escala celular. Para a saturação: o cérebro não processa mais informação quando tem mais — processa melhor quando tem ritmo, pausa, sono. A atenção é um recurso limitado; a dissertação precisa respeitar isso.",
+          badges: [{ type:'campo', text:'neurociências' }, { type:'campo', text:'biologia' }, { type:'metodo', text:'sistêmico' }, { type:'escala', text:'micro' }]
+        },
+        {
+          name: "Inteligência Artificial — compressão com perdas",
+          body: "Um modelo de linguagem é uma redução estatística da linguagem humana — lossy compression em escala planetária. O que sobrevive à compressão é o padrão; o que se perde é o singular, o acidental, o ruído que em Flusser contém a informação máxima. A tensão com a IA não é sobre substituição — é sobre o tipo de redução que ela opera e o que ela apaga sistematicamente.",
+          badges: [{ type:'campo', text:'teoria cultural' }, { type:'epistemologia', text:'construtivista' }, { type:'escala', text:'macro' }]
+        },
+      ]
+    },
+  ],
+  closing: "A redução útil não é simplificação — é escolha epistemológica sobre o que merece existir na dissertação. Cada campo acima desenvolveu um critério diferente: homeostase (o que me mantém), carne (o que me ancora), sentido (o que me orienta), rizoma (o que me conecta), húmus (o que me decompõe produtivamente). A pergunta não é quantos conceitos entram — é qual princípio de seleção você vai usar. E esse princípio vai ser, ele mesmo, a contribuição teórica da dissertação."
+};
+
+/* ── V1.4.1 — Varela + Maturana entries ── */
+DOC.tensionReduction.nodes[0].items[0].name = "Autopoiese (Maturana + Varela)";
+DOC.tensionReduction.nodes[0].items[0].body = "Maturana e Varela cunham o conceito em Autopoiesis and Cognition (1972): sistemas vivos se definem pela capacidade de produzir a si mesmos — seus próprios componentes, seus próprios limites. A organização é o que permanece; a estrutura é o que muda. Para a dissertação: o que a pesquisa precisa manter de si mesma — sua organização — para continuar sendo ela mesma à medida que a estrutura (os capítulos, os conceitos, os autores) se transforma? A redução útil é organizacional, não informacional.";
+
+/* Adiciona Varela — enação — como item separado no mesmo cluster */
+DOC.tensionReduction.nodes[0].items.splice(1, 0, {
+  name: "Francisco Varela — enação e o corpo como origem da mente",
+  body: "Em The Embodied Mind (Varela, Thompson, Rosch, 1991), Varela radicaliza: a cognição não processa representações do mundo — ela enacta o mundo. Conhecer é fazer emergir um domínio de significado a partir da ação encorporada. Não há separação entre sujeito que conhece e mundo que é conhecido — há co-determinação. Para a saturação: a mente não está na cabeça processando inputs externos; ela está no acoplamento estrutural entre corpo e ambiente. A redução que a enação oferece é ecológica — o que importa é o que o corpo consegue manter em acoplamento.",
+  badges: [
+    { type:'campo',         text:'biologia'            },
+    { type:'campo',         text:'neurociências'       },
+    { type:'campo',         text:'fenomenologia do corpo' },
+    { type:'tradicao',      text:'fenomenologia'       },
+    { type:'epistemologia', text:'encorporado'         },
+    { type:'metodo',        text:'sistêmico'           },
+    { type:'escala',        text:'micro'               },
+  ]
+});
+
+/* ── V1.4.2 — Enrique Dussel ── */
+DOC.thinkersExpanded.push({
+  id: "dussel",
+  color: "lilac",
+  label: "Enrique Dussel",
+  title: "Filosofia da Libertação e a exterioridade como ponto de partida",
+  body: "Dussel constrói a Filosofia da Libertação a partir de uma inversão do ponto de partida filosófico: não o cogito cartesiano europeu, mas o Outro — o pobre, o excluído, o colonizado — como lugar epistemológico privilegiado. A analéctica (distinta da dialética hegeliana) é o método: partir da exterioridade do sistema, daquilo que o sistema não consegue totalizar. Sua Ética da Libertação (1998) propõe que a vítima do sistema é quem melhor enxerga suas contradições — não por romantismo, mas por posição estrutural. Transmodernidade: não superar a modernidade europeia pelo pós-moderno, mas completá-la a partir das culturas que ela negou.",
+  connection: "→ Missão Integral + Teologia da Libertação: Dussel é o fio filosófico que conecta a fé encarnada que você trouxe da zona norte com a epistemologia do sul que estrutura esta pesquisa.",
+  badges: [
+    { type:'campo',         text:'filosofia'         },
+    { type:'campo',         text:'ética'             },
+    { type:'tradicao',      text:'decolonial'        },
+    { type:'tradicao',      text:'teoria crítica'    },
+    { type:'metodo',        text:'analéctica'        },
+    { type:'epistemologia', text:'crítico-normativo' },
+    { type:'epistemologia', text:'materialista'      },
+    { type:'escala',        text:'macro'             },
+    { type:'escala',        text:'trans-escalar'     },
+  ]
+});
+
+/* ── V1.4.3 — Dussel expandido + auditoria de connections ── */
+
+/* Substituir entry do Dussel com exterioridade expandida */
+const dusselIdx = DOC.thinkersExpanded.findIndex(t => t.id === 'dussel');
+DOC.thinkersExpanded[dusselIdx].body = "Dussel constrói a Filosofia da Libertação a partir de uma inversão radical do ponto de partida filosófico ocidental: não o cogito cartesiano — que pressupõe um sujeito autossuficiente, europeu, masculino, letrado — mas o Outro como lugar epistemológico privilegiado. A exterioridade é o conceito central: aquilo que está fora do sistema, que o sistema não consegue totalizar, que ele precisa negar para se manter coerente. O pobre, o colonizado, a mulher, o índio — não como vítimas passivas, mas como quem ocupa a posição estrutural de onde o sistema aparece com maior clareza. A analéctica (distinta da dialética hegeliana que absorve tudo) é o método: partir do clamor da exterioridade, do rosto do Outro que interpela antes de qualquer sistema. Sua Ética da Libertação (1998) propõe que a vítima é quem melhor diagnostica as contradições — não por romantismo, mas por posição. Transmodernidade: não superar a modernidade pelo pós-moderno europeu, mas completá-la a partir das culturas que ela silenciou. O sul como lugar de enunciação, não como objeto de estudo.";
+DOC.thinkersExpanded[dusselIdx].connection = "→ Missão Integral + Teologia da Libertação + zona norte: Dussel é o fio filosófico que nomeia o que sua trajetória já praticava — partir da exterioridade do sistema (subúrbio, fé encarnada, classe cinzenta) como vantagem epistemológica, não como déficit a compensar. A desconforto existencial da classe cinzenta que você descreveu é, em Dussel, a posição do fronteiriço: nem dentro nem fora — lugar de máxima visibilidade das contradições.";
+
+/* ═══════════════════════════════════════════
+   AUDITORIA DE CONNECTIONS — sinalização
+   Status: ✅ conectado | ⚠️ fraco | ❌ ausente
+   ═══════════════════════════════════════════ */
+
+/* Fisher ⚠️ — fala de imaginário capturado mas não nomeia sua trajetória */
+/* Fukuyama ⚠️ — thymos sem ponte pessoal */
+/* Varoufakis ✅ — plataforma como aparelho está conectado */
+/* Han ✅ — burnout conectado ao coletivo */
+/* Haraway ⚠️ — saberes situados sem ancoragem biográfica */
+/* Fraser ⚠️ — redistribuição/reconhecimento/representação sem âncora */
+/* Varoufakis expanded ✅ */
+/* Flusser ✅ — explosão da mente está nomeada */
+/* Dunker + Safatle ⚠️ — sofrimento estrutural sem ponte com trajetória pessoal */
+/* Vassão ✅ — projetar para a dépense do outro */
+/* Höök ✅ — gasto corporal antes do conceito */
+/* Van Amstel ✅ — orientador nomeado */
+/* Dussel ✅ recém expandido */
+/* ── Connections ausentes em blocos conceituais ── */
+/* ── Resumo da auditoria como objeto consultável ── */
+DOC.connectionAudit = {
+  label: "auditoria de conexões — epistemologia de vida",
+  strong: [
+    "Flusser — explosão da mente em 2014-2015",
+    "Höök — biodanza como gasto corporal epistemológico",
+    "Van Amstel — dissertação como dom sem retorno garantido",
+    "Vassão — projetar espaço para a dépense do outro",
+    "Dussel — zona norte + Missão Integral como exterioridade produtiva (recém adicionado)"
+  ],
+  gaps: [
+    "Fisher → hauntology e luto pelos futuros da zona norte",
+    "Haraway → saberes situados: você é o sujeito mais situado desta teia",
+    "Fraser → reconhecimento e o desconforto da classe cinzenta",
+    "Dunker/Safatle → sofrimento de indeterminação de classe como dado clínico-político",
+    "Fukuyama → thymos e o desejo de dignidade sem sistema de reconhecimento",
+    "Bloco dépense → exemplo vivido da dépense na sua trajetória",
+    "Design Prospectivo → por que *você*, por que *agora*, por que *esse* programa"
+  ]
+};
+
+/* ── V1.4.4 — Haraway urgency flag ── */
+
+/* Atualiza connection de Haraway com sinalização de urgência */
+const harawayIdx = DOC.thinkersExpanded.findIndex(t => t.id === 'haraway');
+DOC.thinkersExpanded[harawayIdx].urgent = true;
+DOC.thinkersExpanded[harawayIdx].urgentNote = "⚑ lacuna crítica: você é o sujeito mais radicalmente situado desta pesquisa — zona norte, ESDI, evangélico, fronteiriço de classe, designer carioca. Haraway diz que conhecimento de lugar nenhum não é objetividade: é fuga. Nomear seu lugar de enunciação não é fragilidade do anteprojeto — é sua principal credencial epistemológica.";
+DOC.thinkersExpanded[harawayIdx].connection = "→ Saberes situados: sua localização geográfica, religiosa, de classe e de formação não são contexto biográfico a ser declarado e esquecido — são o ponto de vista que torna esta pesquisa verificável e irreproduzível. Zona norte do Rio como lugar de enunciação é tão legítimo quanto qualquer laboratório europeu. URGENTE: isso precisa aparecer explicitamente no anteprojeto.";
+
+/* Haraway também aparece nos blocos conceituais — sinalize onde */
+DOC.tensionReduction.nodes[5].items[0].urgent = true; /* Chthuluceno */
+DOC.tensionReduction.nodes[5].items[0].urgentNote = "⚑ O Chthuluceno conecta diretamente com a pergunta que seu anteprojeto ainda não fez: o que desta pesquisa se relaciona com o que não é humano, com o território, com o mais-que-humano do Rio de Janeiro?";
+
+DOC.meta.version = "v1.4.4";
