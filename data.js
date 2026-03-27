@@ -177,3 +177,115 @@ const DOC = {
     right: "Bataille · Bateson · Fisher · Marcuse · Han · Höök · Van Amstel · Vassão · Bloch · Krenak · Federici · Graeber",
   },
 };
+
+/* ── V1.2 ADDITIONS ── */
+DOC.meta.version = "v1.2";
+
+DOC.thinkersExpanded = [
+  {
+    id: "han",
+    color: "lilac",
+    label: "Byung-Chul Han",
+    title: "A sociedade do cansaço e a transparência forçada",
+    body: "Han diagnostica uma sociedade que substituiu a repressão externa pela auto-exploração. O sujeito de desempenho não precisa de patrão: ele mesmo é seu carrasco e sua vítima. A transparência total — exigida pelas plataformas, pelo mercado, pelo management — é a morte do outro: só existe o mesmo, amplificado. A dépense bloqueada aparece aqui como burnout: o excesso que não encontra saída explode por dentro.",
+    connection: "→ Bataille: a sociedade do cansaço é o que acontece quando toda dépense é convertida em produtividade."
+  },
+  {
+    id: "haraway",
+    color: "lilac",
+    label: "Donna Haraway",
+    title: "Sympoiesis e o pensamento tentacular",
+    body: "Haraway recusa tanto o humanismo quanto o pós-humanismo: propõe 'fazer parentes' com outras espécies, tecnologias e mundos. Staying with the trouble — ficar com o problema sem resolvê-lo rápido — é sua resposta ao colapso. O cyborg não é metáfora de fusão homem-máquina: é a recusa de qualquer fronteira limpa entre natureza e cultura. Seus 'saberes situados' ecoam diretamente o corpo como lugar de conhecimento.",
+    connection: "→ Ingold + Soma Design: conhecer de dentro, em correspondência com o que não é você."
+  },
+  {
+    id: "fraser",
+    color: "lilac",
+    label: "Nancy Fraser",
+    title: "Capitalismo canibal e as três dimensões da justiça",
+    body: "Fraser propõe que justiça tem três eixos inseparáveis: redistribuição (econômica), reconhecimento (cultural) e representação (política). O capitalismo contemporâneo — 'canibal' — devora as próprias condições que o sustentam: trabalho reprodutivo, natureza, democracia. É Bataille em chave feminista e institucional: o sistema consome sua própria base sem conseguir ver o que está destruindo.",
+    connection: "→ Federici + Bataille: a economia invisível que Fraser nomeia é exatamente a dépense expropriada."
+  },
+  {
+    id: "varoufakis",
+    color: "lilac",
+    label: "Yanis Varoufakis",
+    title: "Tecnofeudalism e o capital de nuvem",
+    body: "Varoufakis argumenta que o capitalismo já foi superado — não pelo socialismo, mas pelo tecnofeudalism. As plataformas (Amazon, Google, Meta) não competem no mercado: elas são o mercado. O 'capital de nuvem' não extrai mais-valia do trabalho — extrai renda de quem acessa a plataforma. Fisher dizia que era impossível imaginar além do capitalismo; Varoufakis diz que já estamos além — mas pior.",
+    connection: "→ Fisher + Flusser: o aparelho agora é a plataforma. O programa é o algoritmo. Jogar contra é mais urgente."
+  },
+  {
+    id: "flusser2",
+    color: "lilac",
+    label: "Vilém Flusser",
+    title: "Pós-história, aparelho e a escritura como gesto",
+    body: "Flusser não é só teoria do gesto — é teoria do colapso da linearidade. A pós-história é o momento em que as imagens técnicas substituem os textos como modo dominante de orientação no mundo. O aparelho programa o possível: você fotografa dentro do que a câmera permite imaginar. O design que interessa a Flusser — e ao Metadesign — é o que brinca contra o aparelho, que tenta fazer com ele algo que ele não foi programado para fazer.",
+    connection: "→ Varoufakis + Metadesign: a plataforma é o novo aparelho. Design prospectivo é jogar contra o programa."
+  },
+  {
+    id: "dunker-safatle",
+    color: "lilac",
+    label: "Dunker + Safatle",
+    title: "Sofrimento, reconhecimento e a política do afeto",
+    body: "Christian Dunker (Mal-estar, Sofrimento e Sintoma) e Vladimir Safatle (O Circuito dos Afetos) convergem num ponto: o sofrimento contemporâneo não é acidente — é estrutural. Dunker mostra como o DSM transforma mal-estar em diagnóstico individual, apagando a dimensão política. Safatle argumenta que o afeto circula como infraestrutura política: o medo como cola social é a versão clínica do que Han chama de transparência e Bataille chama de dépense capturada.",
+    connection: "→ Han + corpo: o burnout não é falha individual — é sintoma coletivo de dépense bloqueada em escala clínica."
+  },
+  {
+    id: "vassao2",
+    color: "lilac",
+    label: "Caio Vassão",
+    title: "Arquitetura Livre e o design de segundo nível",
+    body: "Vassão propõe sistemas que não determinam seus usos — sistemas com 'graus de liberdade' embutidos que permitem ao usuário desviar, subverter, reapropiar. A Arquitetura Livre não é ausência de design: é design que projeta espaço para o inesperado. Em termos batailleanos, é projetar para a dépense do outro — criar condições para gastos que o projetista não previu e não controla.",
+    connection: "→ Bataille + Metadesign: o bom design deixa brechas. As brechas são onde a dépense do usuário vive."
+  },
+  {
+    id: "hook2",
+    color: "lilac",
+    label: "Kristina Höök",
+    title: "Soma Design e os strong concepts",
+    body: "Em Strong Concepts (2012) e Soma Design and Somatics (2018), Höök argumenta que certas qualidades de experiência — peso, tensão, ritmo, prazer — são irredutíveis a conceitos funcionais. O designer que pratica Soma Design coloca o próprio corpo no processo antes de abstrair: é a pesquisa encorporada como método. Seus 'strong concepts' são aqueles que carregam implicações de design que transcendem a implementação específica.",
+    connection: "→ Ingold + Flusser: o gesto como pensamento, o percurso como método, o corpo como laboratório epistemológico."
+  },
+  {
+    id: "vanamstel2",
+    color: "lilac",
+    label: "Fred Van Amstel",
+    title: "Metadesign, design ativismo e futuros habitáveis",
+    body: "Van Amstel desenvolve o Metadesign como prática crítica e coletiva: não se trata de projetar objetos, mas de criar condições para que outros processos de design aconteçam — com quem é afetado pelas decisões. Seu design ativismo articula a dimensão política do fazer: quem decide o que será projetado, para quem, em que condições. O design prospectivo que interessa a Van Amstel não prevê o futuro — ele o abre.",
+    connection: "→ Bataille + Bloch: criar condições sem controlar resultados é dépense metodológica. O futuro aberto é o ainda-não de Bloch."
+  }
+];
+
+DOC.latourSynthesis = {
+  label: "Tradução / síntese intersemiótica",
+  title: "O one-pager lido através de Bruno Latour",
+  intro: "A Teoria Ator-Rede (ANT) de Latour oferece uma linguagem unificada para o que este documento explora em múltiplos registros. Para Latour, não existem 'sociais' ou 'naturais' — existem actantes: entidades que agem, que estabelecem associações, que traduzem uns aos outros. Vamos usar essa lente para estabilizar o campo.",
+  actants: [
+    {
+      name: "Dépense como actante",
+      body: "A dépense não é um conceito abstrato — é um actante: age, circula, se transforma. Quando bloqueada, se converte em burnout (Han), em sofrimento estrutural (Dunker/Safatle), em guerra (Bataille). Quando liberada, se converte em festa, dom, obra, pesquisa."
+    },
+    {
+      name: "O corpo como ponto de passagem obrigatório",
+      body: "Na ANT, um 'ponto de passagem obrigatório' é o nó pelo qual todas as traduções precisam passar. O corpo é esse nó neste documento: Flusser (gesto), Ingold (percurso), Höök (soma), biodanza, zona norte — tudo passa pelo corpo antes de virar conceito."
+    },
+    {
+      name: "O aparelho / plataforma como caixa-preta",
+      body: "Latour chama de 'caixa-preta' o que foi tão bem estabilizado que não precisamos mais abrir — aceitamos como dado. O aparelho de Flusser e a plataforma de Varoufakis são caixas-pretas que o design prospectivo precisa reabrir. Metadesign é o projeto de reabertura."
+    },
+    {
+      name: "Rede: Bataille — Bateson — Complexidade",
+      body: "A associação mais robusta do documento: dépense (Bataille) = redundância necessária (Bateson) = flutuação dissipativa (Prigogine). São três traduções do mesmo actante em três redes diferentes. Essa estabilidade cruzada é o que torna o conceito forte."
+    },
+    {
+      name: "Rede: corpo — Bem Viver — Missão Integral",
+      body: "Uma rede menos formalizada mas igualmente real: a dimensão político-espiritual-encorporada. Krenak, Teologia da Libertação e Missão Integral são actantes que traduzem 'economia do dom' em práticas vividas — não teorias. Essa rede ancora o documento no sul global."
+    }
+  ],
+  isolated: [
+    { name: "Fukuyama / fim da história", note: "aparece como contraponto histórico, mas não tem pontes fortes com os outros campos. Poderia ser substituído por Fredric Jameson (pós-modernismo e lógica cultural do capitalismo tardio) para maior coerência interna." },
+    { name: "thymos (Platão via Fukuyama)", note: "conceito interessante mas flutuante — não está ancorado em nenhuma prática ou autor que o desenvolva dentro desta teia. Candidato a aprofundamento ou corte." },
+    { name: "Kimmerer (Braiding Sweetgrass)", note: "mencionada como rizoma mas sem conexão explícita com o corpo do argumento. Vale ou aprofundar a ponte com Haraway/Krenak ou deixar como nota de rodapé." },
+  ],
+  closing: "O que Latour nos permite ver é que este documento não é uma coletânea de autores — é uma rede de actantes tentando estabilizar um argumento: que a vida que sustenta o sistema é exatamente o que o sistema nega computar. Cada autor é uma tradução diferente desse mesmo actante central. A dissertação que emerge disso não precisa citar todos — precisa mostrar a rede."
+};

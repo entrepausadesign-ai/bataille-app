@@ -3,43 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="One-pager conceitual: Bataille, Dépense e a Economia do Excesso — anteprojeto de mestrado em Design Prospectivo UTFPR">
 <title>A Parte Maldita do Design</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
 </head>
 <body>
 
-<div id="app">
+<a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
 
-  <!-- TOOLBAR -->
-  <div id="toolbar">
-    <button class="toolbar-btn primary" onclick="window.print()">↓ exportar / imprimir</button>
-    <button class="toolbar-btn" onclick="app.toggleViz()">⬡ visualização</button>
-    <span class="version-badge" id="ver-badge"></span>
-  </div>
-
-  <!-- HEADER -->
-  <header id="hdr"></header>
-
-  <!-- BLOCOS — injetados pelo JS -->
-  <div id="blocks"></div>
-
-  <!-- FOOTER -->
-  <footer id="ftr"></footer>
-
+<div id="toolbar" role="toolbar" aria-label="Ações do documento">
+  <button class="toolbar-btn primary" onclick="window.print()" aria-label="Exportar ou imprimir documento">↓ exportar / imprimir</button>
+  <button class="toolbar-btn" onclick="toggleViz()" aria-label="Mostrar ou ocultar visualização de dados" aria-expanded="false" id="viz-btn">⬡ visualização</button>
+  <span class="version-badge" id="ver-badge" aria-label="Versão do documento"></span>
 </div>
+
+<header id="hdr" role="banner"></header>
+
+<main id="main-content" tabindex="-1">
+  <div id="blocks"></div>
+</main>
+
+<footer id="ftr" role="contentinfo"></footer>
 
 <script src="data.js"></script>
 <script>
 /* ── helpers ── */
-const h = (tag, cls, html) => `<${tag}${cls?' class="'+cls+'"':''}>${html}</${tag}>`;
-const card = (color, inner) => `<div class="card ${color}">${inner}</div>`;
-const lbl  = t => `<div class="card-label">${t}</div>`;
-const p    = (t, s='') => `<p${s?' style="'+s+'"':''}>${t}</p>`;
-const h2   = t => `<h2>${t}</h2>`;
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const card  = (color, inner) => `<div class="card ${color}">${inner}</div>`;
+const lbl   = t => `<div class="card-label">${t}</div>`;
+const p     = (t, s='') => t ? `<p${s?' style="'+s+'"':''}>${t}</p>` : '';
+const h2    = t => `<h2>${t}</h2>`;
+const h3    = t => `<h3>${t}</h3>`;
 
-/* ── HEADER ── */
+/* ── header ── */
 function renderHeader(m) {
   document.getElementById('ver-badge').textContent = `${m.version} · ${m.date}`;
   document.getElementById('hdr').innerHTML = `
@@ -48,120 +45,132 @@ function renderHeader(m) {
     <p class="subtitle">${m.program} · ${m.candidate}</p>`;
 }
 
-/* ── FOOTER ── */
+/* ── footer ── */
 function renderFooter(f) {
-  document.getElementById('ftr').innerHTML =
-    `<p>${f.left}</p><p>${f.right}</p>`;
+  document.getElementById('ftr').innerHTML = `<p>${f.left}</p><p>${f.right}</p>`;
 }
 
-/* ── BLOCO 0 — síntese ── */
+/* ── b0 síntese ── */
 function b0(d) {
   const tags = d.tags.map(t => `<span class="tag teal">${t}</span>`).join('');
   return `<div class="full">${card('gold',
     lbl(d.label) + h2(d.title) + p(d.body) +
-    `<div style="margin-top:10px">${tags}</div>`
+    `<div style="margin-top:12px">${tags}</div>`
   )}</div>`;
 }
 
-/* ── BLOCO 1 — equívoco + ficção ── */
+/* ── b1 equívoco + ficção ── */
 function b1(cp, sm) {
   return `<div class="grid-2">
     ${card('accent',
       lbl(cp.label) + h2(cp.title) + p(cp.body) +
-      `<div class="quote-block" style="margin-top:10px">
+      `<div class="quote-block" style="margin-top:12px">
         <p>${cp.quote.text}</p>
         <div class="source">— ${cp.quote.source}</div>
-      </div>` +
-      p(cp.body2)
+      </div>` + p(cp.body2)
     )}
-    ${card('gold',
-      lbl(sm.label) + h2(sm.title) + p(sm.body) + p(sm.body2)
-    )}
+    ${card('gold', lbl(sm.label) + h2(sm.title) + p(sm.body) + p(sm.body2))}
   </div>`;
 }
 
-/* ── BLOCO 2 — economia invisível ── */
+/* ── b2 economia invisível ── */
 function b2(d) {
   const tags = d.tags.map(t => `<span class="tag ${t.color}">${t.text}</span>`).join('');
   return `<div class="full">${card('dark',
     lbl(d.label) +
-    `<h2 style="color:#f0ebe0;margin-bottom:10px">${d.title}</h2>
-    <div style="margin-top:8px">${tags}</div>` +
-    p(d.description, 'color:#b8b0a0;font-size:12.5px;margin-top:12px') +
-    `<p style="color:#b8b0a0;font-size:12.5px;margin-top:8px">
-      <strong style="color:#e0d8c8">A tese de Bataille:</strong> ${d.thesis}</p>`
+    `<h2 style="color:#f2ede2;margin-bottom:10px">${d.title}</h2>
+    <div style="margin-top:8px" role="list" aria-label="Elementos da economia invisível">${tags}</div>` +
+    p(d.description, 'color:#c8c0b0;font-size:14px;margin-top:14px') +
+    `<p style="color:#c8c0b0;font-size:14px;margin-top:10px">
+      <strong style="color:#e8e0d0">A tese de Bataille:</strong> ${d.thesis}</p>`
   )}</div>`;
 }
 
-/* ── BLOCO 3 — colapso ── */
+/* ── b3 colapso ── */
 function b3(d) {
   const flow = d.flow.map((s,i) =>
     `<span class="arrow-step hot">${s}</span>` +
-    (i < d.flow.length-1 ? '<span class="arrow-sep">→</span>' : '')
+    (i < d.flow.length-1 ? '<span class="arrow-sep" aria-hidden="true">→</span>' : '')
   ).join('');
   return `<div class="full">${card('accent',
     lbl(d.label) + h2(d.title) +
-    `<div class="arrow-flow" style="margin-bottom:10px">${flow}</div>` +
+    `<div class="arrow-flow" role="list" aria-label="Sequência lógica do colapso" style="margin-bottom:12px">${flow}</div>` +
     p(d.body) + p(d.body2)
   )}</div>`;
 }
 
-/* ── BLOCO 4 — pensadores ── */
+/* ── b4 pensadores originais ── */
 function b4(arr) {
   const cards = arr.map(t =>
     card(t.color, lbl(t.label) + h2(t.title) + p(t.body))
   ).join('');
-  return `<div class="grid">${cards}</div>`;
+  return `<section aria-label="Pensadores e referências teóricas">
+    <div class="grid">${cards}</div>
+  </section>`;
 }
 
-/* ── BLOCO 5 — complexidade + design ── */
+/* ── b4b pensadores expandidos ── */
+function b4b(arr) {
+  const cards = arr.map(t =>
+    card(t.color,
+      lbl(t.label) + h2(t.title) + p(t.body) +
+      (t.connection ? `<p style="margin-top:8px;font-size:13px;color:var(--teal)"><em>${t.connection}</em></p>` : '')
+    )
+  ).join('');
+  return `<section aria-label="Lentes de análise — pensadores em tensão e interconexão">
+    <div class="grid">${cards}</div>
+  </section>`;
+}
+
+/* ── b5 complexidade + design ── */
 function b5(cx, dc) {
   const items = dc.items.map(i =>
-    `<p style="margin-top:8px"><strong>${i.name}:</strong> ${i.body}</p>`
+    `<p style="margin-top:10px"><strong>${i.name}:</strong> ${i.body}</p>`
   ).join('');
   return `<div class="grid-2">
     ${card('teal', lbl(cx.label) + h2(cx.title) + p(cx.body) +
-      `<p style="margin-top:8px"><em>${cx.connection}</em></p>`)}
+      `<p style="margin-top:10px"><em>${cx.connection}</em></p>`)}
     ${card('teal', lbl(dc.label) + h2(dc.title) + items)}
   </div>`;
 }
 
-/* ── BLOCO 6 — design prospectivo ── */
+/* ── b6 design prospectivo ── */
 function b6(d) {
   return `<div class="full">${card('gold',
-    lbl(d.label) + h2(d.title) + p(d.body) +
-    p(d.body2, 'margin-top:8px')
+    lbl(d.label) + h2(d.title) + p(d.body) + p(d.body2, 'margin-top:10px')
   )}</div>`;
 }
 
-/* ── BLOCO 7 — estratégias ── */
+/* ── b7 estratégias ── */
 function b7(arr) {
   const cards = arr.map(s =>
     card('accent',
       lbl(s.label) + h2(s.title) + p(s.body) +
-      `<p style="margin-top:6px"><em>${s.connection}</em></p>`
+      `<p style="margin-top:8px;font-size:13px"><em>${s.connection}</em></p>`
     )
   ).join('');
-  return `<div class="grid">${cards}</div>`;
+  return `<section aria-label="Estratégias metodológicas">
+    <div class="grid">${cards}</div>
+  </section>`;
 }
 
-/* ── BLOCO 8 — conexões ── */
+/* ── b8 conexões ── */
 function b8(arr) {
   const rows = arr.map(c =>
-    `<div class="connector" style="flex:1;min-width:200px">
-      <div class="connector-dot" style="background:${c.color}"></div>
+    `<div class="connector">
+      <div class="connector-dot" style="background:${c.color}" aria-hidden="true"></div>
       <p><strong>${c.text}:</strong> ${c.body}</p>
     </div>`
   ).join('');
   return `<div class="full">
-    <div class="card" style="background:#faf7ee;border-color:#d8c890">
+    <div class="card" style="background:#faf7ec;border-color:#c8c090">
       ${lbl('Mapa de conexões — rizoma desta teia')}
-      <div class="footnote-row" style="margin-top:8px">${rows}</div>
+      <div style="margin-top:10px">${rows}</div>
     </div>
   </div>`;
 }
 
-/* ── BLOCO 9 — tensão produtiva ── */
+/* ── b9 tensão produtiva ── */
 function b9(d) {
   return `<div class="full">${card('gold',
     lbl(d.label) + p(d.body) +
@@ -169,18 +178,57 @@ function b9(d) {
   )}</div>`;
 }
 
-/* ── BLOCO VIZ ── */
-function bViz() {
-  return `<div id="viz-section" style="display:none">
-    <hr class="divider">
+/* ── b10 síntese Latour ── */
+function b10(d) {
+  const actants = d.actants.map(a =>
+    `<div class="latour-concept">
+      ${h3(a.name)}
+      ${p(a.body)}
+    </div>`
+  ).join('');
+
+  const isolated = d.isolated.map(i =>
+    `<div style="margin-bottom:8px">
+      <span class="isolated-flag">⚑ isolado</span>
+      <strong style="font-size:13px">${i.name}</strong>
+      <p style="font-size:13px;color:var(--ink-muted);margin-top:3px">${i.note}</p>
+    </div>`
+  ).join('');
+
+  return `<div class="full">
     <div class="card teal">
-      <div class="card-label">visualização · economia visível vs. invisível</div>
-      <canvas id="depense-chart" height="180"></canvas>
+      ${lbl(d.label)}
+      ${h2(d.title)}
+      ${p(d.intro, 'margin-bottom:16px')}
+      <div style="margin-bottom:16px" aria-label="Actantes principais">${actants}</div>
+      <div style="margin-bottom:14px">
+        <div class="card-label" style="margin-bottom:10px">conceitos com baixa conectividade — sinalizar ou aprofundar</div>
+        ${isolated}
+      </div>
+      ${p(d.closing, 'font-style:italic;border-top:1px solid var(--teal-soft);padding-top:12px;margin-top:4px')}
     </div>
   </div>`;
 }
 
-/* ── RENDER TUDO ── */
+/* ── viz ── */
+function bViz() {
+  return `<div id="viz-section" style="display:none" role="region" aria-label="Visualização de dados">
+    <hr class="divider">
+    <div class="card teal">
+      <div class="card-label">visualização · economia visível vs. invisível · elementos catalogados</div>
+      <canvas id="depense-chart" height="160" aria-label="Gráfico de barras: distribuição dos elementos da economia invisível por categoria" role="img"></canvas>
+    </div>
+  </div>`;
+}
+
+/* ── section label ── */
+function sectionLabel(txt) {
+  return `<div style="margin:28px 0 14px">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);border-bottom:1px solid var(--border);padding-bottom:8px">${txt}</div>
+  </div>`;
+}
+
+/* ── render all ── */
 function renderAll() {
   const D = DOC;
   renderHeader(D.meta);
@@ -190,33 +238,38 @@ function renderAll() {
     b1(D.coreProblem, D.scarcityMyth),
     b2(D.invisibleEconomy),
     b3(D.collapseLogic),
+    sectionLabel('referências fundantes'),
     b4(D.thinkers),
+    sectionLabel('lentes de análise — tensionamento e interconexão'),
+    b4b(D.thinkersExpanded),
     b5(D.complexity, D.designConnections),
     b6(D.prospectiveDesign),
     '<hr class="divider">',
     b7(D.strategies),
     b8(D.connections),
     b9(D.productiveTension),
+    '<hr class="divider">',
+    b10(D.latourSynthesis),
     bViz(),
   ].join('\n');
 }
 
-/* ── APP ── */
+/* ── chart ── */
 let _chart = null;
 
-const app = {
-  toggleViz() {
-    const s = document.getElementById('viz-section');
-    const visible = s.style.display === 'none';
-    s.style.display = visible ? 'block' : 'none';
-    if (visible && !_chart) buildChart();
-  }
-};
+function toggleViz() {
+  const s   = document.getElementById('viz-section');
+  const btn = document.getElementById('viz-btn');
+  const vis = s.style.display === 'none';
+  s.style.display = vis ? 'block' : 'none';
+  btn.setAttribute('aria-expanded', vis ? 'true' : 'false');
+  if (vis && !_chart) buildChart();
+}
 
 function buildChart() {
   const ctx = document.getElementById('depense-chart');
   if (!ctx) return;
-  const tags = DOC.invisibleEconomy.tags;
+  const tags  = DOC.invisibleEconomy.tags;
   const count = c => tags.filter(t => t.color === c).length;
   _chart = new Chart(ctx, {
     type: 'bar',
@@ -224,20 +277,30 @@ function buildChart() {
       labels: ['dépense visível', 'dépense bloqueada', 'dépense latente'],
       datasets: [{
         data: [count('teal'), count('red'), count('gold') + count('purple')],
-        backgroundColor: ['#c0dfd6','#e8c4b4','#e8dab8'],
-        borderColor:     ['#1a6e5a','#b5390e','#9a7020'],
-        borderWidth: 1, borderRadius: 3,
+        backgroundColor: ['#b8dcd4','#f0d0c4','#eed8a8'],
+        borderColor:     ['#0f5e4a','#a02d08','#8a6010'],
+        borderWidth: 1.5,
+        borderRadius: 4,
       }]
     },
     options: {
       responsive: true,
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: { label: ctx => ` ${ctx.parsed.y} elementos` }
+        }
+      },
       scales: {
-        y: { beginAtZero: true,
-             ticks: { font: { family:'DM Mono, monospace', size:10 }, color:'#9a9590' },
-             grid:  { color:'#d8d0c0' } },
-        x: { ticks: { font: { family:'EB Garamond, serif', size:12 }, color:'#5a5650' },
-             grid:  { display:false } }
+        y: {
+          beginAtZero: true,
+          ticks: { font: { family:'DM Mono,monospace', size:11 }, color:'#7a7870' },
+          grid:  { color:'#cec8b8' }
+        },
+        x: {
+          ticks: { font: { family:'EB Garamond,serif', size:14 }, color:'#4a4840' },
+          grid:  { display: false }
+        }
       }
     }
   });
