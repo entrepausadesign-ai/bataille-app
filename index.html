@@ -215,18 +215,35 @@ function b3(d) {
 
 /* b4 + b4b unified — thinker grid */
 function renderThinkerGrid(arr, sectionLabel, showConnection = false) {
-  const cards = arr.map(t =>
-    card(t.color,
+  const useAccordion = showConnection; // accordion only on expanded grid
+  const cards = arr.map(t => {
+    const header =
       lbl(t.label) +
       renderBadges(t.badges) +
-      renderUrgent(t.urgent ? t.urgentNote : null) +
-      h2(t.title) +
-      p(t.body) +
-      (showConnection && t.connection
-        ? `<p style="margin-top:8px;font-size:13px;color:var(--teal)"><em>${t.connection}</em></p>`
-        : '')
-    )
-  ).join('');
+      renderUrgent(t.urgent ? t.urgentNote : null);
+
+    if (useAccordion) {
+      const body =
+        h2(t.title) +
+        p(t.body) +
+        (t.connection
+          ? `<p style="margin-top:8px;font-size:13px;color:var(--teal)"><em>${t.connection}</em></p>`
+          : '');
+      return `<div class="card ${t.color} card-accordion">
+        <details>
+          <summary class="accordion-summary">
+            ${header}
+            <span class="accordion-title">${t.title}</span>
+          </summary>
+          <div class="accordion-body">${body}</div>
+        </details>
+      </div>`;
+    }
+
+    return card(t.color,
+      header + h2(t.title) + p(t.body)
+    );
+  }).join('');
   return `<section aria-label="${sectionLabel}"><div class="grid">${cards}</div></section>`;
 }
 
