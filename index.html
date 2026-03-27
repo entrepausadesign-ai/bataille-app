@@ -10,222 +10,240 @@
 </head>
 <body>
 
-<div id="app" v-scope>
+<div id="app">
 
   <!-- TOOLBAR -->
   <div id="toolbar">
-    <button class="toolbar-btn primary" @click="window.print()">↓ exportar / imprimir</button>
-    <button class="toolbar-btn" @click="toggleViz()">⬡ visualização</button>
-    <span class="version-badge">{{ meta.version }} · {{ meta.date }}</span>
+    <button class="toolbar-btn primary" onclick="window.print()">↓ exportar / imprimir</button>
+    <button class="toolbar-btn" onclick="app.toggleViz()">⬡ visualização</button>
+    <span class="version-badge" id="ver-badge"></span>
   </div>
 
   <!-- HEADER -->
-  <header>
-    <div class="eyebrow">{{ meta.eyebrow }}</div>
-    <h1>{{ meta.title }}<br><em>{{ meta.subtitle }}</em></h1>
-    <p class="subtitle">{{ meta.program }} · {{ meta.candidate }}</p>
-  </header>
+  <header id="hdr"></header>
 
-  <!-- BLOCO 0 — SÍNTESE INTEGRADORA -->
-  <div class="full">
-    <div class="card gold">
-      <div class="card-label">{{ synthesis.label }}</div>
-      <h2>{{ synthesis.title }}</h2>
-      <p>{{ synthesis.body }}</p>
-      <div style="margin-top:10px">
-        <span v-for="t in synthesis.tags" class="tag teal">{{ t }}</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOCO 1 — EQUÍVOCO + FICÇÃO DA ESCASSEZ -->
-  <div class="grid-2">
-    <div class="card accent">
-      <div class="card-label">{{ coreProblem.label }}</div>
-      <h2>{{ coreProblem.title }}</h2>
-      <p>{{ coreProblem.body }}</p>
-      <div class="quote-block" style="margin-top:10px">
-        <p>{{ coreProblem.quote.text }}</p>
-        <div class="source">— {{ coreProblem.quote.source }}</div>
-      </div>
-      <p>{{ coreProblem.body2 }}</p>
-    </div>
-    <div class="card gold">
-      <div class="card-label">{{ scarcityMyth.label }}</div>
-      <h2>{{ scarcityMyth.title }}</h2>
-      <p>{{ scarcityMyth.body }}</p>
-      <p>{{ scarcityMyth.body2 }}</p>
-    </div>
-  </div>
-
-  <!-- BLOCO 2 — ECONOMIA INVISÍVEL -->
-  <div class="full">
-    <div class="card dark">
-      <div class="card-label">{{ invisibleEconomy.label }}</div>
-      <h2 style="color:#f0ebe0;margin-bottom:10px">{{ invisibleEconomy.title }}</h2>
-      <div style="margin-top:8px">
-        <span v-for="t in invisibleEconomy.tags" :class="'tag ' + t.color">{{ t.text }}</span>
-      </div>
-      <p style="color:#b8b0a0;font-size:12.5px;margin-top:12px">{{ invisibleEconomy.description }}</p>
-      <p style="color:#b8b0a0;font-size:12.5px;margin-top:8px">
-        <strong style="color:#e0d8c8">A tese de Bataille:</strong> {{ invisibleEconomy.thesis }}
-      </p>
-    </div>
-  </div>
-
-  <!-- BLOCO 3 — LÓGICA DO RETORNO / COLAPSO -->
-  <div class="full">
-    <div class="card accent">
-      <div class="card-label">{{ collapseLogic.label }}</div>
-      <h2>{{ collapseLogic.title }}</h2>
-      <div class="arrow-flow" style="margin-bottom:10px">
-        <template v-for="(step, i) in collapseLogic.flow">
-          <span class="arrow-step hot">{{ step }}</span>
-          <span v-if="i < collapseLogic.flow.length - 1" class="arrow-sep">→</span>
-        </template>
-      </div>
-      <p>{{ collapseLogic.body }}</p>
-      <p>{{ collapseLogic.body2 }}</p>
-    </div>
-  </div>
-
-  <!-- BLOCO 4 — PENSADORES (3 colunas) -->
-  <div class="grid">
-    <div v-for="t in thinkers" :class="'card ' + t.color">
-      <div class="card-label">{{ t.label }}</div>
-      <h2>{{ t.title }}</h2>
-      <p>{{ t.body }}</p>
-    </div>
-  </div>
-
-  <!-- BLOCO 5 — COMPLEXIDADE + DESIGN (2 colunas) -->
-  <div class="grid-2">
-    <div class="card teal">
-      <div class="card-label">{{ complexity.label }}</div>
-      <h2>{{ complexity.title }}</h2>
-      <p>{{ complexity.body }}</p>
-      <p style="margin-top:8px"><em>{{ complexity.connection }}</em></p>
-    </div>
-    <div class="card teal">
-      <div class="card-label">{{ designConnections.label }}</div>
-      <h2>{{ designConnections.title }}</h2>
-      <div v-for="item in designConnections.items" style="margin-top:8px">
-        <p><strong>{{ item.name }}:</strong> {{ item.body }}</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOCO 6 — DESIGN PROSPECTIVO -->
-  <div class="full">
-    <div class="card gold">
-      <div class="card-label">{{ prospectiveDesign.label }}</div>
-      <h2>{{ prospectiveDesign.title }}</h2>
-      <p>{{ prospectiveDesign.body }}</p>
-      <p style="margin-top:8px">{{ prospectiveDesign.body2 }}</p>
-    </div>
-  </div>
-
-  <hr class="divider">
-
-  <!-- BLOCO 7 — ESTRATÉGIAS METODOLÓGICAS (3 colunas) -->
-  <div class="grid">
-    <div v-for="s in strategies" class="card accent">
-      <div class="card-label">{{ s.label }}</div>
-      <h2>{{ s.title }}</h2>
-      <p>{{ s.body }}</p>
-      <p style="margin-top:6px"><em>{{ s.connection }}</em></p>
-    </div>
-  </div>
-
-  <!-- BLOCO 8 — MAPA DE CONEXÕES -->
-  <div class="full">
-    <div class="card" style="background:#faf7ee;border-color:#d8c890">
-      <div class="card-label">Mapa de conexões — rizoma desta teia</div>
-      <div class="footnote-row" style="margin-top:8px">
-        <div v-for="c in connections" class="connector" style="flex:1;min-width:200px">
-          <div class="connector-dot" :style="'background:' + c.color"></div>
-          <p><strong>{{ c.text }}:</strong> {{ c.body }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOCO 9 — TENSÃO PRODUTIVA -->
-  <div class="full">
-    <div class="card gold">
-      <div class="card-label">{{ productiveTension.label }}</div>
-      <p>{{ productiveTension.body }}</p>
-      <p class="question-callout">{{ productiveTension.question }}</p>
-    </div>
-  </div>
-
-  <!-- VIZ — toggle reativo -->
-  <div v-show="vizVisible" id="viz-section">
-    <hr class="divider">
-    <div class="card teal">
-      <div class="card-label">visualização · economia visível vs. invisível · elementos catalogados</div>
-      <canvas id="depense-chart" height="180"></canvas>
-    </div>
-  </div>
+  <!-- BLOCOS — injetados pelo JS -->
+  <div id="blocks"></div>
 
   <!-- FOOTER -->
-  <footer>
-    <p>{{ footer.left }}</p>
-    <p>{{ footer.right }}</p>
-  </footer>
+  <footer id="ftr"></footer>
 
 </div>
 
 <script src="data.js"></script>
 <script>
-PetiteVue.createApp({
-  ...DOC,
-  vizVisible: false,
-  _chart: null,
+/* ── helpers ── */
+const h = (tag, cls, html) => `<${tag}${cls?' class="'+cls+'"':''}>${html}</${tag}>`;
+const card = (color, inner) => `<div class="card ${color}">${inner}</div>`;
+const lbl  = t => `<div class="card-label">${t}</div>`;
+const p    = (t, s='') => `<p${s?' style="'+s+'"':''}>${t}</p>`;
+const h2   = t => `<h2>${t}</h2>`;
 
+/* ── HEADER ── */
+function renderHeader(m) {
+  document.getElementById('ver-badge').textContent = `${m.version} · ${m.date}`;
+  document.getElementById('hdr').innerHTML = `
+    <div class="eyebrow">${m.eyebrow}</div>
+    <h1>${m.title}<br><em>${m.subtitle}</em></h1>
+    <p class="subtitle">${m.program} · ${m.candidate}</p>`;
+}
+
+/* ── FOOTER ── */
+function renderFooter(f) {
+  document.getElementById('ftr').innerHTML =
+    `<p>${f.left}</p><p>${f.right}</p>`;
+}
+
+/* ── BLOCO 0 — síntese ── */
+function b0(d) {
+  const tags = d.tags.map(t => `<span class="tag teal">${t}</span>`).join('');
+  return `<div class="full">${card('gold',
+    lbl(d.label) + h2(d.title) + p(d.body) +
+    `<div style="margin-top:10px">${tags}</div>`
+  )}</div>`;
+}
+
+/* ── BLOCO 1 — equívoco + ficção ── */
+function b1(cp, sm) {
+  return `<div class="grid-2">
+    ${card('accent',
+      lbl(cp.label) + h2(cp.title) + p(cp.body) +
+      `<div class="quote-block" style="margin-top:10px">
+        <p>${cp.quote.text}</p>
+        <div class="source">— ${cp.quote.source}</div>
+      </div>` +
+      p(cp.body2)
+    )}
+    ${card('gold',
+      lbl(sm.label) + h2(sm.title) + p(sm.body) + p(sm.body2)
+    )}
+  </div>`;
+}
+
+/* ── BLOCO 2 — economia invisível ── */
+function b2(d) {
+  const tags = d.tags.map(t => `<span class="tag ${t.color}">${t.text}</span>`).join('');
+  return `<div class="full">${card('dark',
+    lbl(d.label) +
+    `<h2 style="color:#f0ebe0;margin-bottom:10px">${d.title}</h2>
+    <div style="margin-top:8px">${tags}</div>` +
+    p(d.description, 'color:#b8b0a0;font-size:12.5px;margin-top:12px') +
+    `<p style="color:#b8b0a0;font-size:12.5px;margin-top:8px">
+      <strong style="color:#e0d8c8">A tese de Bataille:</strong> ${d.thesis}</p>`
+  )}</div>`;
+}
+
+/* ── BLOCO 3 — colapso ── */
+function b3(d) {
+  const flow = d.flow.map((s,i) =>
+    `<span class="arrow-step hot">${s}</span>` +
+    (i < d.flow.length-1 ? '<span class="arrow-sep">→</span>' : '')
+  ).join('');
+  return `<div class="full">${card('accent',
+    lbl(d.label) + h2(d.title) +
+    `<div class="arrow-flow" style="margin-bottom:10px">${flow}</div>` +
+    p(d.body) + p(d.body2)
+  )}</div>`;
+}
+
+/* ── BLOCO 4 — pensadores ── */
+function b4(arr) {
+  const cards = arr.map(t =>
+    card(t.color, lbl(t.label) + h2(t.title) + p(t.body))
+  ).join('');
+  return `<div class="grid">${cards}</div>`;
+}
+
+/* ── BLOCO 5 — complexidade + design ── */
+function b5(cx, dc) {
+  const items = dc.items.map(i =>
+    `<p style="margin-top:8px"><strong>${i.name}:</strong> ${i.body}</p>`
+  ).join('');
+  return `<div class="grid-2">
+    ${card('teal', lbl(cx.label) + h2(cx.title) + p(cx.body) +
+      `<p style="margin-top:8px"><em>${cx.connection}</em></p>`)}
+    ${card('teal', lbl(dc.label) + h2(dc.title) + items)}
+  </div>`;
+}
+
+/* ── BLOCO 6 — design prospectivo ── */
+function b6(d) {
+  return `<div class="full">${card('gold',
+    lbl(d.label) + h2(d.title) + p(d.body) +
+    p(d.body2, 'margin-top:8px')
+  )}</div>`;
+}
+
+/* ── BLOCO 7 — estratégias ── */
+function b7(arr) {
+  const cards = arr.map(s =>
+    card('accent',
+      lbl(s.label) + h2(s.title) + p(s.body) +
+      `<p style="margin-top:6px"><em>${s.connection}</em></p>`
+    )
+  ).join('');
+  return `<div class="grid">${cards}</div>`;
+}
+
+/* ── BLOCO 8 — conexões ── */
+function b8(arr) {
+  const rows = arr.map(c =>
+    `<div class="connector" style="flex:1;min-width:200px">
+      <div class="connector-dot" style="background:${c.color}"></div>
+      <p><strong>${c.text}:</strong> ${c.body}</p>
+    </div>`
+  ).join('');
+  return `<div class="full">
+    <div class="card" style="background:#faf7ee;border-color:#d8c890">
+      ${lbl('Mapa de conexões — rizoma desta teia')}
+      <div class="footnote-row" style="margin-top:8px">${rows}</div>
+    </div>
+  </div>`;
+}
+
+/* ── BLOCO 9 — tensão produtiva ── */
+function b9(d) {
+  return `<div class="full">${card('gold',
+    lbl(d.label) + p(d.body) +
+    `<p class="question-callout">${d.question}</p>`
+  )}</div>`;
+}
+
+/* ── BLOCO VIZ ── */
+function bViz() {
+  return `<div id="viz-section" style="display:none">
+    <hr class="divider">
+    <div class="card teal">
+      <div class="card-label">visualização · economia visível vs. invisível</div>
+      <canvas id="depense-chart" height="180"></canvas>
+    </div>
+  </div>`;
+}
+
+/* ── RENDER TUDO ── */
+function renderAll() {
+  const D = DOC;
+  renderHeader(D.meta);
+  renderFooter(D.footer);
+  document.getElementById('blocks').innerHTML = [
+    b0(D.synthesis),
+    b1(D.coreProblem, D.scarcityMyth),
+    b2(D.invisibleEconomy),
+    b3(D.collapseLogic),
+    b4(D.thinkers),
+    b5(D.complexity, D.designConnections),
+    b6(D.prospectiveDesign),
+    '<hr class="divider">',
+    b7(D.strategies),
+    b8(D.connections),
+    b9(D.productiveTension),
+    bViz(),
+  ].join('\n');
+}
+
+/* ── APP ── */
+let _chart = null;
+
+const app = {
   toggleViz() {
-    this.vizVisible = !this.vizVisible;
-    if (this.vizVisible) {
-      setTimeout(() => this._buildChart(), 50);
-    }
-  },
-
-  _buildChart() {
-    if (this._chart) return;
-    const ctx = document.getElementById('depense-chart');
-    if (!ctx) return;
-    const tags = DOC.invisibleEconomy.tags;
-    const count = (c) => tags.filter(t => t.color === c).length;
-    this._chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['dépense visível', 'dépense bloqueada', 'dépense latente'],
-        datasets: [{
-          data: [count('teal'), count('red'), count('gold') + count('purple')],
-          backgroundColor: ['#c0dfd6', '#e8c4b4', '#e8dab8'],
-          borderColor:     ['#1a6e5a', '#b5390e', '#9a7020'],
-          borderWidth: 1,
-          borderRadius: 3,
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { font: { family: 'DM Mono, monospace', size: 10 }, color: '#9a9590' },
-            grid:  { color: '#d8d0c0' }
-          },
-          x: {
-            ticks: { font: { family: 'EB Garamond, serif', size: 12 }, color: '#5a5650' },
-            grid:  { display: false }
-          }
-        }
-      }
-    });
+    const s = document.getElementById('viz-section');
+    const visible = s.style.display === 'none';
+    s.style.display = visible ? 'block' : 'none';
+    if (visible && !_chart) buildChart();
   }
-}).mount('#app');
+};
+
+function buildChart() {
+  const ctx = document.getElementById('depense-chart');
+  if (!ctx) return;
+  const tags = DOC.invisibleEconomy.tags;
+  const count = c => tags.filter(t => t.color === c).length;
+  _chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['dépense visível', 'dépense bloqueada', 'dépense latente'],
+      datasets: [{
+        data: [count('teal'), count('red'), count('gold') + count('purple')],
+        backgroundColor: ['#c0dfd6','#e8c4b4','#e8dab8'],
+        borderColor:     ['#1a6e5a','#b5390e','#9a7020'],
+        borderWidth: 1, borderRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true,
+             ticks: { font: { family:'DM Mono, monospace', size:10 }, color:'#9a9590' },
+             grid:  { color:'#d8d0c0' } },
+        x: { ticks: { font: { family:'EB Garamond, serif', size:12 }, color:'#5a5650' },
+             grid:  { display:false } }
+      }
+    }
+  });
+}
+
+renderAll();
 </script>
 </body>
 </html>
