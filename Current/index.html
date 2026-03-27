@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="One-pager conceitual: Bataille, Dépense e a Economia do Excesso — anteprojeto de mestrado em Design Prospectivo UTFPR">
+<title>A Parte Maldita do Design</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
+
+<div id="toolbar" role="toolbar" aria-label="Ações do documento">
+  <button class="toolbar-btn primary" onclick="window.print()" aria-label="Exportar ou imprimir">↓ exportar / imprimir</button>
+  <button class="toolbar-btn" onclick="toggleViz()" id="viz-btn" aria-expanded="false" aria-label="Mostrar visualização">⬡ visualização</button>
+  <span class="version-badge" id="ver-badge"></span>
+</div>
+
+<header id="hdr" role="banner"></header>
+
+<main id="main-content" tabindex="-1">
+  <div id="legend-strip"></div>
+  <div id="blocks"></div>
+</main>
+
+<footer id="ftr" role="contentinfo"></footer>
+
+<script src="data.js"></script>
+<script>
+/* ═══════════════════════════════════
+   BADGE SYSTEM (view layer — moved from data.js)
+   ═══════════════════════════════════ */
+const BADGE_TYPES = {
+  campo:         { bg:'#e6f1fb', fg:'#0c447c', br:'#85b7eb' },
+  tradicao:      { bg:'#eeedfe', fg:'#3c3489', br:'#afa9ec' },
+  metodo:        { bg:'#e1f5ee', fg:'#085041', br:'#5dcaa5' },
+  epistemologia: { bg:'#faece7', fg:'#712b13', br:'#f0997b' },
+  escala:        { bg:'#faeeda', fg:'#633806', br:'#ef9f27' },
+};
+
+function renderBadges(badges) {
+  if (!badges?.length) return '';
+  return '<div class="badge-row">' +
+    badges.map(b => {
+      const t = BADGE_TYPES[b.type] || BADGE_TYPES.campo;
+      return `<span class="badge-pill" style="background:${t.bg};color:${t.fg};border-color:${t.br}">${b.text}</span>`;
+    }).join('') + '</div>';
+}
+
+/* ═══════════════════════════════════
+   PRIMITIVE HELPERS
+   ═══════════════════════════════════ */
+const card  = (cls, inner) => `<div class="card ${cls}">${inner}</div>`;
+const lbl   = t => `<div class="card-label">${t}</div>`;
+const p     = (t, s) => t ? `<p${s ? ` style="${s}"` : ''}>${t}</p>` : '';
+const h2    = t => `<h2>${t}</h2>`;
+const h3    = t => `<h3>${t}</h3>`;
+const full  = inner => `<div class="full">${inner}</div>`;
+const sep   = () => '<hr class="divider">';
+const sLabel = t => `<div class="slabel">${t}</div>`;
+
+function renderUrgent(note) {
+  return note
+    ? `<div class="urgent-banner" role="alert"><span class="urgent-icon">⚑ urgente</span><span class="urgent-text">${note}</span></div>`
+    : '';
+}
+
+function renderQuote(q) {
+  return `<div class="quote-block" style="margin-top:12px"><p>${q.text}</p><div class="source">— ${q.source}</div></div>`;
+}
+
+/* ═══════════════════════════════════
+   CHROME — header / footer / legend
+   ═══════════════════════════════════ */
+function renderHeader(m) {
+  document.getElementById('ver-badge').textContent = `${m.version} · ${m.date}`;
+  document.getElementById('hdr').innerHTML =
+    `<div class="eyebrow">${m.eyebrow}</div>
+     <h1>${m.title}<br><em>${m.subtitle}</em></h1>
+     <p class="subtitle">${m.program} · ${m.candidate}</p>`;
+}
+
+function renderFooter(f) {
+  document.getElementById('ftr').innerHTML = `<p>${f.left}</p><p>${f.right}</p>`;
+}
+
+function renderLegend() {
+  const items = [
+    ['#e6f1fb','#0c447c','campo / disciplina'],
+    ['#eeedfe','#3c3489','tradição / escola'],
+    ['#e1f5ee','#085041','método / abordagem'],
+    ['#faece7','#712b13','posição epistemológica'],
+    ['#faeeda','#633806','escala de análise'],
+  ];
+  document.getElementById('legend-strip').innerHTML =
+    `<div class="badge-legend" aria-label="Legenda dos marcadores">` +
+    items.map(([bg,fg,label]) =>
+      `<div class="badge-legend-item">
+        <div class="badge-legend-dot" style="background:${bg};border:1px solid ${fg}"></div>
+        <span style="color:${fg}">${label}</span>
+      </div>`
+    ).join('') + '</div>';
+}
+
+/* ═══════════════════════════════════
+   BLOCK RENDERERS
+   ═══════════════════════════════════ */
+
+/* b0 — síntese integradora */
+function b0(d) {
+  const tags = d.tags.map(t => `<span class="tag teal">${t}</span>`).join('');
+  return full(card('gold', lbl(d.label) + h2(d.title) + p(d.body) + `<div style="margin-top:12px">${tags}</div>`));
+}
+
+/* b1 — equívoco fundador + ficção da escassez */
+function b1(cp, sm) {
+  return `<div class="grid-2">
+    ${card('accent', lbl(cp.label) + renderBadges(cp.badges) + h2(cp.title) + p(cp.body) + renderQuote(cp.quote) + p(cp.body2))}
+    ${card('gold',   lbl(sm.label) + renderBadges(sm.badges) + h2(sm.title) + p(sm.body) + p(sm.body2))}
+  </div>`;
+}
+
+/* b2 — economia invisível */
+function b2(d) {
+  const tags = d.tags.map(t => `<span class="tag ${t.color}">${t.text}</span>`).join('');
+  return full(card('dark',
+    lbl(d.label) +
+    `<h2 style="color:#f2ede2;margin-bottom:10px">${d.title}</h2>` +
+    `<div style="margin-top:8px">${tags}</div>` +
+    p(d.description, 'color:#c8c0b0;font-size:14px;margin-top:14px') +
+    `<p style="color:#c8c0b0;font-size:14px;margin-top:10px"><strong style="color:#e8e0d0">A tese de Bataille:</strong> ${d.thesis}</p>`
+  ));
+}
+
+/* b3 — lógica do colapso */
+function b3(d) {
+  const flow = d.flow.map((s, i) =>
+    `<span class="arrow-step hot">${s}</span>` + (i < d.flow.length - 1 ? '<span class="arrow-sep" aria-hidden="true">→</span>' : '')
+  ).join('');
+  return full(card('accent',
+    lbl(d.label) + renderBadges(d.badges) + h2(d.title) +
+    `<div class="arrow-flow" style="margin-bottom:12px">${flow}</div>` +
+    p(d.body) + p(d.body2)
+  ));
+}
+
+/* b4 + b4b unified — thinker grid */
+function renderThinkerGrid(arr, sectionLabel, showConnection = false) {
+  const cards = arr.map(t =>
+    card(t.color,
+      lbl(t.label) +
+      renderBadges(t.badges) +
+      renderUrgent(t.urgent ? t.urgentNote : null) +
+      h2(t.title) +
+      p(t.body) +
+      (showConnection && t.connection
+        ? `<p style="margin-top:8px;font-size:13px;color:var(--teal)"><em>${t.connection}</em></p>`
+        : '')
+    )
+  ).join('');
+  return `<section aria-label="${sectionLabel}"><div class="grid">${cards}</div></section>`;
+}
+
+/* b5 — complexidade + design connections */
+function b5(cx, dc) {
+  const items = dc.items.map(i => `<p style="margin-top:10px"><strong>${i.name}:</strong> ${i.body}</p>`).join('');
+  return `<div class="grid-2">
+    ${card('teal', lbl(cx.label) + renderBadges(cx.badges) + h2(cx.title) + p(cx.body) + p(cx.body2, 'margin-top:10px') + `<p style="margin-top:10px"><em>${cx.connection}</em></p>`)}
+    ${card('teal', lbl(dc.label) + h2(dc.title) + items)}
+  </div>`;
+}
+
+/* b6 — design prospectivo */
+function b6(d) {
+  return full(card('gold', lbl(d.label) + renderBadges(d.badges) + h2(d.title) + p(d.body) + p(d.body2, 'margin-top:10px')));
+}
+
+/* b7 — estratégias metodológicas */
+function b7(arr) {
+  const cards = arr.map(s =>
+    card('accent', lbl(s.label) + h2(s.title) + p(s.body) + `<p style="margin-top:8px;font-size:13px"><em>${s.connection}</em></p>`)
+  ).join('');
+  return `<section aria-label="Estratégias metodológicas"><div class="grid">${cards}</div></section>`;
+}
+
+/* b8 — mapa de conexões */
+function b8(arr) {
+  const rows = arr.map(c =>
+    `<div class="connector">
+      <div class="connector-dot" style="background:${c.color}" aria-hidden="true"></div>
+      <p><strong>${c.text}:</strong> ${c.body}</p>
+    </div>`
+  ).join('');
+  return full(`<div class="card" style="background:#faf7ec;border-color:#c8c090">${lbl('Mapa de conexões — rizoma desta teia')}<div style="margin-top:10px">${rows}</div></div>`);
+}
+
+/* b9 — tensão produtiva */
+function b9(d) {
+  return full(card('gold', lbl(d.label) + p(d.body) + `<p class="question-callout">${d.question}</p>`));
+}
+
+/* b10 — síntese Latour */
+function b10(d) {
+  const actants = d.actants.map(a => `<div class="latour-concept">${h3(a.name)}${p(a.body)}</div>`).join('');
+  const isolated = d.isolated.map(i =>
+    `<div style="margin-bottom:10px">
+      <span class="isolated-flag">⚑ isolado</span>
+      <strong style="font-size:13px">${i.name}</strong>
+      <p style="font-size:13px;color:var(--ink-muted);margin-top:3px">${i.note}</p>
+    </div>`
+  ).join('');
+  return full(card('teal',
+    lbl(d.label) + renderBadges(d.badges) + h2(d.title) +
+    p(d.intro, 'margin-bottom:16px') +
+    `<div style="margin-bottom:16px">${actants}</div>` +
+    `<div style="margin-bottom:14px"><div class="card-label" style="margin-bottom:10px">conceitos com baixa conectividade</div>${isolated}</div>` +
+    p(d.closing, 'font-style:italic;border-top:1px solid var(--teal-soft);padding-top:12px;margin-top:4px')
+  ));
+}
+
+/* b11 — tensão/redução (clustered) */
+function b11(d) {
+  const clusters = d.nodes.map(cluster => {
+    const items = cluster.items.map(item =>
+      `<div class="cluster-item">
+        ${renderBadges(item.badges)}
+        ${renderUrgent(item.urgent ? item.urgentNote : null)}
+        ${h3(item.name)}
+        ${p(item.body)}
+      </div>`
+    ).join('');
+    return `<div class="cluster-wrap"><div class="cluster-label">${cluster.cluster}</div>${items}</div>`;
+  }).join('');
+
+  return full(card('teal',
+    lbl(d.label) + renderBadges(d.badges) + h2(d.title) +
+    p(d.intro, 'margin-bottom:20px;margin-top:10px') +
+    clusters +
+    p(d.closing, 'font-style:italic;border-top:1px solid var(--teal-soft);padding-top:14px;margin-top:8px;font-size:14.5px')
+  ));
+}
+
+/* b12 — auditoria de conexões */
+function b12(d) {
+  const item = (icon, color, text) =>
+    `<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px">
+      <span style="color:${color};font-size:13px;flex-shrink:0">${icon}</span>
+      <p style="font-size:13px;margin:0">${text}</p>
+    </div>`;
+  const strong = d.strong.map(s => item('✓', 'var(--teal)', s)).join('');
+  const gaps   = d.gaps.map(g   => item('⚠', 'var(--gold)', g)).join('');
+  return full(`<div class="card" style="background:#faf7ec;border-left:4px solid var(--gold);border-color:var(--gold)">
+    ${lbl(d.label)}
+    <div class="grid-2" style="margin-top:10px">
+      <div><div class="card-label" style="color:var(--teal);margin-bottom:8px">conexões fortes — já nomeadas</div>${strong}</div>
+      <div><div class="card-label" style="color:var(--gold);margin-bottom:8px">lacunas — pontes ausentes</div>${gaps}</div>
+    </div>
+  </div>`);
+}
+
+/* b13 — viz toggle */
+function bViz() {
+  return `<div id="viz-section" style="display:none" role="region" aria-label="Visualização">
+    <hr class="divider">
+    <div class="card teal">
+      <div class="card-label">visualização · economia visível vs. invisível</div>
+      <canvas id="depense-chart" height="160" role="img" aria-label="Gráfico — distribuição da dépense"></canvas>
+    </div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════
+   MAIN RENDER
+   ═══════════════════════════════════ */
+function renderAll() {
+  renderHeader(DOC.meta);
+  renderFooter(DOC.footer);
+  renderLegend();
+
+  document.getElementById('blocks').innerHTML = [
+    b0(DOC.synthesis),
+    b1(DOC.coreProblem, DOC.scarcityMyth),
+    b2(DOC.invisibleEconomy),
+    b3(DOC.collapseLogic),
+    sLabel('referências fundantes'),
+    renderThinkerGrid(DOC.thinkers, 'Referências fundantes'),
+    sLabel('lentes de análise — tensionamento e interconexão'),
+    renderThinkerGrid(DOC.thinkersExpanded, 'Lentes de análise', true),
+    b5(DOC.complexity, DOC.designConnections),
+    b6(DOC.prospectiveDesign),
+    sep(),
+    b7(DOC.strategies),
+    b8(DOC.connections),
+    b9(DOC.productiveTension),
+    sep(),
+    b10(DOC.latourSynthesis),
+    sep(),
+    b11(DOC.tensionReduction),
+    sep(),
+    sLabel('auditoria — conexões com epistemologia de vida'),
+    b12(DOC.connectionAudit),
+    bViz(),
+  ].join('\n');
+}
+
+/* ═══════════════════════════════════
+   CHART
+   ═══════════════════════════════════ */
+let _chart = null;
+
+function toggleViz() {
+  const viz = document.getElementById('viz-section');
+  const btn = document.getElementById('viz-btn');
+  const opening = viz.style.display === 'none';
+  viz.style.display = opening ? 'block' : 'none';
+  btn.setAttribute('aria-expanded', opening);
+  if (opening && !_chart) buildChart();
+}
+
+function buildChart() {
+  const ctx = document.getElementById('depense-chart');
+  if (!ctx) return;
+  const tags  = DOC.invisibleEconomy.tags;
+  const count = c => tags.filter(t => t.color === c).length;
+  _chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['dépense visível', 'dépense bloqueada', 'dépense latente'],
+      datasets: [{
+        data: [count('teal'), count('red'), count('gold') + count('purple')],
+        backgroundColor: ['#b8dcd4', '#f0d0c4', '#eed8a8'],
+        borderColor:     ['#0f5e4a', '#a02d08', '#8a6010'],
+        borderWidth: 1.5, borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, ticks: { font: { family: 'DM Mono, monospace', size: 11 }, color: '#7a7870' }, grid: { color: '#cec8b8' } },
+        x: { ticks: { font: { family: 'EB Garamond, serif', size: 14 }, color: '#4a4840' }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+renderAll();
+</script>
+</body>
+</html>
