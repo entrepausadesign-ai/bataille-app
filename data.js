@@ -8,6 +8,8 @@ const DOC = {
     eyebrow: "preparação · mestrado design prospectivo · UTFPR",
     program: "Design Prospectivo — UTFPR · orientação Fred Van Amstel",
     candidate: "Designer · ESDI/UERJ 2017 · Rio de Janeiro",
+  },
+
   orthodoxCore: {
     label: "Definição ortodoxa — núcleo duro da tese",
     title: "Dépense, em Bataille, é a lei do excesso e não uma metáfora moral do desperdício",
