@@ -289,3 +289,160 @@ DOC.latourSynthesis = {
   ],
   closing: "O que Latour nos permite ver é que este documento não é uma coletânea de autores — é uma rede de actantes tentando estabilizar um argumento: que a vida que sustenta o sistema é exatamente o que o sistema nega computar. Cada autor é uma tradução diferente desse mesmo actante central. A dissertação que emerge disso não precisa citar todos — precisa mostrar a rede."
 };
+
+/* ══════════════════════════════════════════
+   V1.3 — BADGE SYSTEM
+   ══════════════════════════════════════════ */
+
+/* ── Taxonomia de olhares ── */
+const BADGE_TYPES = {
+  campo:         { bg:'#e6f1fb', fg:'#0c447c', br:'#85b7eb', label:'campo'     },
+  tradicao:      { bg:'#eeedfe', fg:'#3c3489', br:'#afa9ec', label:'tradição'  },
+  metodo:        { bg:'#e1f5ee', fg:'#085041', br:'#5dcaa5', label:'método'    },
+  epistemologia: { bg:'#faece7', fg:'#712b13', br:'#f0997b', label:'episteme'  },
+  escala:        { bg:'#faeeda', fg:'#633806', br:'#ef9f27', label:'escala'    },
+};
+
+/* ── helper global ── */
+function renderBadges(badges) {
+  if (!badges || !badges.length) return '';
+  return '<div class="badge-row">' +
+    badges.map(b => {
+      const t = BADGE_TYPES[b.type] || BADGE_TYPES.campo;
+      return `<span class="badge-pill" style="background:${t.bg};color:${t.fg};border-color:${t.br}" title="${t.label}">${b.text}</span>`;
+    }).join('') +
+  '</div>';
+}
+
+/* ── Badges nos thinkers originais ── */
+DOC.thinkers[0].badges = [
+  { type:'campo',         text:'teoria cultural' },   // EXPANSÃO: cultural studies
+  { type:'tradicao',      text:'teoria crítica'  },
+  { type:'epistemologia', text:'crítico-normativo'},
+  { type:'escala',        text:'macro'           },
+];
+DOC.thinkers[1].badges = [
+  { type:'campo',         text:'filosofia política' },
+  { type:'epistemologia', text:'liberal-revisado'   },  // EXPANSÃO: autocrítica pós-2016
+  { type:'escala',        text:'macro'              },
+];
+DOC.thinkers[2].badges = [
+  { type:'campo',         text:'economia política'  },  // EXPANSÃO: mais preciso q "economia"
+  { type:'campo',         text:'teoria cultural'    },
+  { type:'epistemologia', text:'crítico-normativo'  },
+  { type:'escala',        text:'macro'              },
+];
+
+/* ── Badges nos thinkersExpanded ── */
+DOC.thinkersExpanded[0].badges = [  // Han
+  { type:'campo',         text:'filosofia'        },
+  { type:'tradicao',      text:'teoria crítica'   },
+  { type:'epistemologia', text:'crítico-normativo' },
+  { type:'escala',        text:'micro'            },
+  { type:'escala',        text:'macro'            },
+];
+DOC.thinkersExpanded[1].badges = [  // Haraway
+  { type:'campo',         text:'biologia'         },
+  { type:'campo',         text:'STS'              },
+  { type:'tradicao',      text:'feminismo'        },
+  { type:'metodo',        text:'etnografia'       },
+  { type:'epistemologia', text:'materialista'     },
+  { type:'escala',        text:'trans-escalar'    },  // EXPANSÃO
+];
+DOC.thinkersExpanded[2].badges = [  // Fraser
+  { type:'campo',         text:'filosofia'        },
+  { type:'campo',         text:'sociologia'       },
+  { type:'tradicao',      text:'teoria crítica'   },
+  { type:'tradicao',      text:'feminismo'        },
+  { type:'epistemologia', text:'crítico-normativo' },
+  { type:'escala',        text:'trans-escalar'    },
+];
+DOC.thinkersExpanded[3].badges = [  // Varoufakis
+  { type:'campo',         text:'economia política' },
+  { type:'metodo',        text:'sistêmico'         },
+  { type:'epistemologia', text:'crítico-normativo' },
+  { type:'escala',        text:'macro'             },
+];
+DOC.thinkersExpanded[4].badges = [  // Flusser
+  { type:'campo',         text:'filosofia'         },
+  { type:'campo',         text:'comunicação'       },
+  { type:'tradicao',      text:'fenomenologia'     },
+  { type:'epistemologia', text:'construtivista'    },
+  { type:'escala',        text:'micro'             },
+  { type:'escala',        text:'macro'             },
+];
+DOC.thinkersExpanded[5].badges = [  // Dunker + Safatle
+  { type:'campo',         text:'psicanálise'       },
+  { type:'campo',         text:'filosofia'         },
+  { type:'metodo',        text:'clínico'           },
+  { type:'epistemologia', text:'crítico-normativo' },
+  { type:'escala',        text:'micro'             },
+  { type:'escala',        text:'macro'             },
+];
+DOC.thinkersExpanded[6].badges = [  // Vassão
+  { type:'campo',         text:'design'            },
+  { type:'campo',         text:'arquitetura'       },  // EXPANSÃO
+  { type:'metodo',        text:'projetual'         },
+  { type:'metodo',        text:'sistêmico'         },
+  { type:'epistemologia', text:'construtivista'    },
+  { type:'escala',        text:'meso'              },
+];
+DOC.thinkersExpanded[7].badges = [  // Höök
+  { type:'campo',         text:'design'            },
+  { type:'campo',         text:'HCI'               },
+  { type:'metodo',        text:'somático'          },  // EXPANSÃO
+  { type:'metodo',        text:'projetual'         },
+  { type:'epistemologia', text:'encorporado'       },
+  { type:'escala',        text:'micro'             },
+];
+DOC.thinkersExpanded[8].badges = [  // Van Amstel
+  { type:'campo',         text:'design'            },
+  { type:'tradicao',      text:'teoria crítica'    },
+  { type:'tradicao',      text:'pragmatismo latino' },  // EXPANSÃO
+  { type:'metodo',        text:'projetual'         },
+  { type:'epistemologia', text:'crítico-normativo' },
+  { type:'epistemologia', text:'construtivista'    },
+  { type:'escala',        text:'meso'              },
+];
+
+/* ── Badges em blocos conceituais ── */
+DOC.coreProblem.badges = [
+  { type:'campo',         text:'filosofia'         },
+  { type:'campo',         text:'economia política' },
+  { type:'tradicao',      text:'pós-estruturalismo'},
+  { type:'epistemologia', text:'materialista'      },
+  { type:'metodo',        text:'genealogia'        },
+  { type:'escala',        text:'macro'             },
+];
+DOC.scarcityMyth.badges = [
+  { type:'campo',         text:'economia política' },
+  { type:'epistemologia', text:'crítico-normativo' },
+  { type:'escala',        text:'macro'             },
+];
+DOC.collapseLogic.badges = [
+  { type:'campo',         text:'sociologia'        },
+  { type:'epistemologia', text:'crítico-normativo' },
+  { type:'escala',        text:'macro'             },
+];
+DOC.complexity.badges = [
+  { type:'campo',         text:'biologia'          },
+  { type:'campo',         text:'física'            },
+  { type:'metodo',        text:'sistêmico'         },
+  { type:'epistemologia', text:'construtivista'    },
+  { type:'escala',        text:'trans-escalar'     },
+];
+DOC.prospectiveDesign.badges = [
+  { type:'campo',         text:'design'            },
+  { type:'metodo',        text:'projetual'         },
+  { type:'epistemologia', text:'construtivista'    },
+  { type:'escala',        text:'macro'             },
+];
+DOC.latourSynthesis.badges = [
+  { type:'campo',         text:'sociologia'        },
+  { type:'campo',         text:'STS'               },
+  { type:'metodo',        text:'ANT'               },
+  { type:'epistemologia', text:'construtivista'    },
+  { type:'escala',        text:'trans-escalar'     },
+];
+
+DOC.meta.version = "v1.3";
