@@ -7,6 +7,39 @@
 <title>A Parte Maldita do Design</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* P3 — nav dropdown */
+.nav-wrap { position: relative; }
+.nav-btn::after { content: ' ▾'; font-size: 9px; }
+.nav-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--color-background-primary, #fdfcf8);
+  border: 1px solid var(--color-border-secondary, #cec8b8);
+  border-radius: 6px;
+  min-width: 220px;
+  z-index: 200;
+  padding: 6px 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+.nav-wrap:hover .nav-menu,
+.nav-wrap:focus-within .nav-menu { display: block; }
+.nav-menu a {
+  display: block;
+  padding: 7px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary, #4a4840);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-menu a:hover { background: var(--color-background-secondary, #f2ede2); color: var(--color-text-primary, #111008); }
+.nav-menu hr { border: none; border-top: 1px solid var(--color-border-tertiary, #d8d0c0); margin: 4px 0; }
+</style>
 </head>
 <body>
 
@@ -15,6 +48,22 @@
 <div id="toolbar" role="toolbar" aria-label="Ações do documento">
   <button class="toolbar-btn primary" onclick="window.print()" aria-label="Exportar ou imprimir">↓ exportar / imprimir</button>
   <button class="toolbar-btn" onclick="toggleViz()" id="viz-btn" aria-expanded="false" aria-label="Mostrar visualização">⬡ visualização</button>
+  <div class="nav-wrap">
+    <button class="toolbar-btn nav-btn" aria-label="Navegar para seção" aria-haspopup="true">ir para</button>
+    <nav class="nav-menu" role="menu">
+      <a href="#sec-sintese"   role="menuitem">síntese integradora</a>
+      <a href="#sec-base"      role="menuitem">referências fundantes</a>
+      <a href="#sec-lentes"    role="menuitem">lentes de análise</a>
+      <a href="#sec-prospectivo" role="menuitem">design prospectivo</a>
+      <hr>
+      <a href="#sec-estrategias" role="menuitem">estratégias metodológicas</a>
+      <a href="#sec-conexoes"  role="menuitem">mapa de conexões</a>
+      <a href="#sec-latour"    role="menuitem">síntese Latour</a>
+      <a href="#sec-tensao"    role="menuitem">tensão / redução</a>
+      <hr>
+      <a href="#sec-auditoria" role="menuitem">auditoria de conexões</a>
+    </nav>
+  </div>
   <span class="version-badge" id="ver-badge"></span>
 </div>
 
