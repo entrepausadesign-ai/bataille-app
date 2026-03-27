@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Parte Maldita do Design</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/petite-vue@0.4.1/dist/petite-vue.iife.js"></script>
+</head>
+<body>
+
+<div id="app" v-scope>
+
+  <!-- TOOLBAR -->
+  <div id="toolbar">
+    <button class="toolbar-btn primary" @click="window.print()">↓ exportar / imprimir</button>
+    <button class="toolbar-btn" @click="toggleViz()">⬡ visualização</button>
+    <span class="version-badge">{{ meta.version }} · {{ meta.date }}</span>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="eyebrow">{{ meta.eyebrow }}</div>
+    <h1>{{ meta.title }}<br><em>{{ meta.subtitle }}</em></h1>
+    <p class="subtitle">{{ meta.program }} · {{ meta.candidate }}</p>
+  </header>
+
+  <!-- BLOCO 0 — SÍNTESE INTEGRADORA -->
+  <div class="full">
+    <div class="card gold">
+      <div class="card-label">{{ synthesis.label }}</div>
+      <h2>{{ synthesis.title }}</h2>
+      <p>{{ synthesis.body }}</p>
+      <div style="margin-top:10px">
+        <span v-for="t in synthesis.tags" class="tag teal">{{ t }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 1 — EQUÍVOCO + FICÇÃO DA ESCASSEZ -->
+  <div class="grid-2">
+    <div class="card accent">
+      <div class="card-label">{{ coreProblem.label }}</div>
+      <h2>{{ coreProblem.title }}</h2>
+      <p>{{ coreProblem.body }}</p>
+      <div class="quote-block" style="margin-top:10px">
+        <p>{{ coreProblem.quote.text }}</p>
+        <div class="source">— {{ coreProblem.quote.source }}</div>
+      </div>
+      <p>{{ coreProblem.body2 }}</p>
+    </div>
+    <div class="card gold">
+      <div class="card-label">{{ scarcityMyth.label }}</div>
+      <h2>{{ scarcityMyth.title }}</h2>
+      <p>{{ scarcityMyth.body }}</p>
+      <p>{{ scarcityMyth.body2 }}</p>
+    </div>
+  </div>
+
+  <!-- BLOCO 2 — ECONOMIA INVISÍVEL -->
+  <div class="full">
+    <div class="card dark">
+      <div class="card-label">{{ invisibleEconomy.label }}</div>
+      <h2 style="color:#f0ebe0;margin-bottom:10px">{{ invisibleEconomy.title }}</h2>
+      <div style="margin-top:8px">
+        <span v-for="t in invisibleEconomy.tags" :class="'tag ' + t.color">{{ t.text }}</span>
+      </div>
+      <p style="color:#b8b0a0;font-size:12.5px;margin-top:12px">{{ invisibleEconomy.description }}</p>
+      <p style="color:#b8b0a0;font-size:12.5px;margin-top:8px">
+        <strong style="color:#e0d8c8">A tese de Bataille:</strong> {{ invisibleEconomy.thesis }}
+      </p>
+    </div>
+  </div>
+
+  <!-- BLOCO 3 — LÓGICA DO RETORNO / COLAPSO -->
+  <div class="full">
+    <div class="card accent">
+      <div class="card-label">{{ collapseLogic.label }}</div>
+      <h2>{{ collapseLogic.title }}</h2>
+      <div class="arrow-flow" style="margin-bottom:10px">
+        <template v-for="(step, i) in collapseLogic.flow">
+          <span class="arrow-step hot">{{ step }}</span>
+          <span v-if="i < collapseLogic.flow.length - 1" class="arrow-sep">→</span>
+        </template>
+      </div>
+      <p>{{ collapseLogic.body }}</p>
+      <p>{{ collapseLogic.body2 }}</p>
+    </div>
+  </div>
+
+  <!-- BLOCO 4 — PENSADORES (3 colunas) -->
+  <div class="grid">
+    <div v-for="t in thinkers" :class="'card ' + t.color">
+      <div class="card-label">{{ t.label }}</div>
+      <h2>{{ t.title }}</h2>
+      <p>{{ t.body }}</p>
+    </div>
+  </div>
+
+  <!-- BLOCO 5 — COMPLEXIDADE + DESIGN (2 colunas) -->
+  <div class="grid-2">
+    <div class="card teal">
+      <div class="card-label">{{ complexity.label }}</div>
+      <h2>{{ complexity.title }}</h2>
+      <p>{{ complexity.body }}</p>
+      <p style="margin-top:8px"><em>{{ complexity.connection }}</em></p>
+    </div>
+    <div class="card teal">
+      <div class="card-label">{{ designConnections.label }}</div>
+      <h2>{{ designConnections.title }}</h2>
+      <div v-for="item in designConnections.items" style="margin-top:8px">
+        <p><strong>{{ item.name }}:</strong> {{ item.body }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 6 — DESIGN PROSPECTIVO -->
+  <div class="full">
+    <div class="card gold">
+      <div class="card-label">{{ prospectiveDesign.label }}</div>
+      <h2>{{ prospectiveDesign.title }}</h2>
+      <p>{{ prospectiveDesign.body }}</p>
+      <p style="margin-top:8px">{{ prospectiveDesign.body2 }}</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BLOCO 7 — ESTRATÉGIAS METODOLÓGICAS (3 colunas) -->
+  <div class="grid">
+    <div v-for="s in strategies" class="card accent">
+      <div class="card-label">{{ s.label }}</div>
+      <h2>{{ s.title }}</h2>
+      <p>{{ s.body }}</p>
+      <p style="margin-top:6px"><em>{{ s.connection }}</em></p>
+    </div>
+  </div>
+
+  <!-- BLOCO 8 — MAPA DE CONEXÕES -->
+  <div class="full">
+    <div class="card" style="background:#faf7ee;border-color:#d8c890">
+      <div class="card-label">Mapa de conexões — rizoma desta teia</div>
+      <div class="footnote-row" style="margin-top:8px">
+        <div v-for="c in connections" class="connector" style="flex:1;min-width:200px">
+          <div class="connector-dot" :style="'background:' + c.color"></div>
+          <p><strong>{{ c.text }}:</strong> {{ c.body }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO 9 — TENSÃO PRODUTIVA -->
+  <div class="full">
+    <div class="card gold">
+      <div class="card-label">{{ productiveTension.label }}</div>
+      <p>{{ productiveTension.body }}</p>
+      <p class="question-callout">{{ productiveTension.question }}</p>
+    </div>
+  </div>
+
+  <!-- VIZ — toggle reativo -->
+  <div v-show="vizVisible" id="viz-section">
+    <hr class="divider">
+    <div class="card teal">
+      <div class="card-label">visualização · economia visível vs. invisível · elementos catalogados</div>
+      <canvas id="depense-chart" height="180"></canvas>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>{{ footer.left }}</p>
+    <p>{{ footer.right }}</p>
+  </footer>
+
+</div>
+
+<script src="data.js"></script>
+<script>
+PetiteVue.createApp({
+  ...DOC,
+  vizVisible: false,
+  _chart: null,
+
+  toggleViz() {
+    this.vizVisible = !this.vizVisible;
+    if (this.vizVisible) {
+      setTimeout(() => this._buildChart(), 50);
+    }
+  },
+
+  _buildChart() {
+    if (this._chart) return;
+    const ctx = document.getElementById('depense-chart');
+    if (!ctx) return;
+    const tags = DOC.invisibleEconomy.tags;
+    const count = (c) => tags.filter(t => t.color === c).length;
+    this._chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['dépense visível', 'dépense bloqueada', 'dépense latente'],
+        datasets: [{
+          data: [count('teal'), count('red'), count('gold') + count('purple')],
+          backgroundColor: ['#c0dfd6', '#e8c4b4', '#e8dab8'],
+          borderColor:     ['#1a6e5a', '#b5390e', '#9a7020'],
+          borderWidth: 1,
+          borderRadius: 3,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { font: { family: 'DM Mono, monospace', size: 10 }, color: '#9a9590' },
+            grid:  { color: '#d8d0c0' }
+          },
+          x: {
+            ticks: { font: { family: 'EB Garamond, serif', size: 12 }, color: '#5a5650' },
+            grid:  { display: false }
+          }
+        }
+      }
+    });
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
